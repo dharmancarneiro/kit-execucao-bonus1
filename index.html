@@ -962,8 +962,8 @@ Se ao final ficar claro que ela não é importante de verdade, me dê os motivos
      Com os valores de exemplo abaixo, o kit funciona
      normalmente — só não envia dados (modo de teste).
   ===================================================== */
-  var SUPABASE_URL  = 'https://SEU-PROJETO.supabase.co';   // <-- troque
-  var SUPABASE_ANON = 'COLE_AQUI_A_CHAVE_ANON_PUBLIC';     // <-- troque
+  var SUPABASE_URL  = 'https://qccfeuqxyesdrcgjnxng.supabase.co';
+  var SUPABASE_ANON = 'sb_publishable_Er-MxgKomN4C4P1mcA4H1g_zPPhJOs9';
   var SUPABASE_TABLE = 'alunos_execucao5';
   // Tag gravada em todo cadastro: identifica que a pessoa participou do Bônus 1
   var TAG_BONUS = 'bonus1_kit_execucao';
@@ -1022,11 +1022,24 @@ Se ao final ficar claro que ela não é importante de verdade, me dê os motivos
     }catch(e){ if(cb){cb(null);} }
   }
 
+  // Gera o UUID no navegador: a tabela não tem política de SELECT
+  // (privacidade dos alunos), então o id não pode ser lido de volta.
+  function gerarUUID(){
+    try{
+      if(window.crypto && window.crypto.randomUUID){ return window.crypto.randomUUID(); }
+    }catch(e){}
+    var s = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
+    return s.replace(/[xy]/g, function(c){
+      var r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);
+      return v.toString(16);
+    });
+  }
+
   function sbInsertAluno(registro, cb){
-    sbRequest('POST', SUPABASE_TABLE, registro, 'return=representation', function(data){
-      if(data && data.length && data[0] && data[0].id){
-        storeSet(K('sb_id'), data[0].id);
-      }
+    var id = gerarUUID();
+    registro.id = id;
+    storeSet(K('sb_id'), id);
+    sbRequest('POST', SUPABASE_TABLE, registro, 'return=minimal', function(){
       if(cb){ cb(); }
     });
   }

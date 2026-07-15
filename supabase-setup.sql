@@ -52,7 +52,12 @@ create policy "update_progresso"
   using (true)
   with check (true);
 
--- 5) NÃO criar política de SELECT.
+-- 5) Importante: sem política de SELECT, o INSERT não pode usar
+--    "Prefer: return=representation" (o RETURNING exige SELECT).
+--    Por isso o HTML gera o uuid no navegador e insere com
+--    "Prefer: return=minimal".
+--
+-- 6) NÃO criar política de SELECT.
 --    Sem ela, a chave anon não lê nada — nem via REST, nem via JS.
 --    (A service_role, usada só em ambiente privado, ignora RLS e lê tudo.)
 
