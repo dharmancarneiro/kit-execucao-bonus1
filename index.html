@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kit de Execução Imediata · Bônus 1 · Execução 5.0</title>
+<meta name="description" content="Kit de Execução Imediata — Bônus 1 do Execução 5.0, com Christian Barbosa. Saia do 'não sei por onde começar' em 48 horas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ECEAE3;
+    --card:#FBFAF7;
+    --ink:#16212E;
+    --ink-soft:#4A5563;
+    --line:#DAD7CD;
+    --green:#0F8768;
+    --green-deep:#0B6B52;
+    --green-soft:#E4F0EC;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    font-size:16px;
+    line-height:1.6;
+  }
+  ::selection{background:var(--green-soft);color:var(--green-deep)}
+
+  a{color:var(--green-deep)}
+  button{font-family:inherit;cursor:pointer}
+  input,select,textarea{font-family:inherit;font-size:16px;color:var(--ink)}
+
+  /* foco de teclado visível */
+  a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,
+  .kit-check:focus-visible{
+    outline:3px solid var(--green);
+    outline-offset:2px;
+    border-radius:6px;
+  }
+
+  .mono{font-family:'JetBrains Mono',monospace}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--green-deep);
+    font-weight:600;
+  }
+
+  /* ---------- barra de progresso fixa ---------- */
+  .progress-bar-wrap{
+    position:-webkit-sticky;
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:var(--card);
+    border-bottom:1px solid var(--line);
+    padding:10px 16px;
+  }
+  .progress-inner{
+    max-width:860px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .progress-label{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    white-space:nowrap;
+    color:var(--ink);
+  }
+  .progress-track{
+    flex:1;
+    height:10px;
+    background:var(--line);
+    border-radius:99px;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,var(--green),var(--green-deep));
+    border-radius:99px;
+    transition:width .45s ease;
+  }
+  .progress-pct{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    font-weight:600;
+    color:var(--green-deep);
+    min-width:44px;
+    text-align:right;
+  }
+
+  /* ---------- layout ---------- */
+  .wrap{max-width:860px;margin:0 auto;padding:0 20px}
+  section{padding:40px 0}
+  .section-head{margin-bottom:22px}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-spacing:-.02em;line-height:1.15}
+  h2{font-size:clamp(24px,4.5vw,32px);margin-top:8px}
+  .section-sub{color:var(--ink-soft);margin-top:8px;max-width:56ch}
+
+  /* ---------- hero ---------- */
+  .hero{padding:56px 0 36px}
+  .hero h1{font-size:clamp(34px,7vw,58px);font-weight:700;margin-top:10px}
+  .hero .lede{
+    color:var(--ink-soft);
+    font-size:clamp(16px,2.5vw,19px);
+    margin-top:16px;
+    max-width:58ch;
+  }
+  .hero-sign{
+    margin-top:24px;
+    padding:16px 20px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-left:4px solid var(--green);
+    border-radius:var(--radius);
+    max-width:560px;
+  }
+  .hero-sign p{font-size:15px;color:var(--ink-soft);font-style:italic}
+  .hero-sign .who{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    font-style:normal;
+    color:var(--ink);
+    font-weight:600;
+    margin-top:8px;
+  }
+
+  /* ---------- cards como usar ---------- */
+  .howto-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:14px;
+  }
+  .howto-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:20px;
+  }
+  .howto-num{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    font-weight:600;
+    color:var(--green-deep);
+    background:var(--green-soft);
+    border-radius:99px;
+    padding:3px 10px;
+    margin-bottom:10px;
+  }
+  .howto-card h3{font-size:17px;margin-bottom:6px}
+  .howto-card p{font-size:14px;color:var(--ink-soft)}
+
+  /* ---------- mapa 48h ---------- */
+  .day-label{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:600;
+    font-size:15px;
+    color:var(--ink);
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:99px;
+    display:inline-block;
+    padding:6px 16px;
+    margin:26px 0 4px;
+  }
+  .timeline{position:relative;padding-left:6px}
+  .kit-block{
+    position:relative;
+    display:flex;
+    gap:14px;
+    padding:16px 16px 16px 14px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    margin-top:12px;
+    transition:border-color .2s ease,background .2s ease;
+  }
+  .kit-block.done{
+    background:var(--green-soft);
+    border-color:var(--green);
+  }
+  .kit-check{
+    flex:none;
+    width:26px;
+    height:26px;
+    margin-top:2px;
+    border:2px solid var(--ink-soft);
+    border-radius:8px;
+    background:var(--card);
+    position:relative;
+    -webkit-appearance:none;
+    appearance:none;
+    padding:0;
+  }
+  .kit-block.done .kit-check{
+    background:var(--green);
+    border-color:var(--green);
+  }
+  .kit-block.done .kit-check:after{
+    content:"";
+    position:absolute;
+    left:7px;top:3px;
+    width:6px;height:11px;
+    border:solid #fff;
+    border-width:0 3px 3px 0;
+    transform:rotate(45deg);
+  }
+  .kit-meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    align-items:center;
+    margin-bottom:4px;
+  }
+  .kit-time{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;
+    font-weight:600;
+    color:var(--ink);
+    background:var(--bg);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:2px 8px;
+  }
+  .kit-phase{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--green-deep);
+    background:var(--green-soft);
+    border-radius:6px;
+    padding:2px 8px;
+  }
+  .kit-block h3{font-size:16px;margin-bottom:3px}
+  .kit-block p{font-size:14px;color:var(--ink-soft)}
+  .kit-block.done h3{text-decoration:line-through;text-decoration-color:var(--green)}
+
+  /* ---------- templates ---------- */
+  .tpl-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px;
+    margin-top:14px;
+  }
+  .tpl-card h3{font-size:17px;margin-bottom:4px}
+  .tpl-card .tpl-hint{font-size:13px;color:var(--ink-soft);margin-bottom:14px}
+  .field{margin-top:12px}
+  .field label{
+    display:block;
+    font-size:13px;
+    font-weight:600;
+    color:var(--ink);
+    margin-bottom:6px;
+  }
+  .field input[type=text],.field textarea,.field select{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:#fff;
+    padding:12px 14px;
+    color:var(--ink);
+  }
+  .field textarea{min-height:70px;resize:vertical}
+  .save-note{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    color:var(--green-deep);
+    margin-top:10px;
+    opacity:0;
+    transition:opacity .3s ease;
+  }
+  .save-note.show{opacity:1}
+
+  /* ---------- prompts ---------- */
+  .prompt-card{
+    background:var(--ink);
+    color:#E9EDF2;
+    border-radius:var(--radius);
+    padding:22px;
+    margin-top:14px;
+  }
+  .prompt-card h3{
+    font-size:16px;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  .prompt-num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    font-weight:600;
+    color:var(--green-soft);
+    background:rgba(15,135,104,.35);
+    border-radius:6px;
+    padding:2px 8px;
+  }
+  .prompt-when{font-size:13px;color:#AAB4C0;margin-top:6px}
+  .prompt-body{
+    font-family:'JetBrains Mono',monospace;
+    font-size:13px;
+    line-height:1.65;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:10px;
+    padding:16px;
+    margin-top:14px;
+    white-space:pre-wrap;
+    word-break:break-word;
+  }
+  .prompt-body .ph{
+    color:#0F8768;
+    background:var(--green-soft);
+    border-radius:4px;
+    padding:0 5px;
+    font-weight:600;
+  }
+  .btn-copy{
+    margin-top:14px;
+    background:var(--green);
+    color:#fff;
+    border:0;
+    border-radius:10px;
+    font-size:14px;
+    font-weight:600;
+    padding:11px 20px;
+    min-height:44px;
+    transition:background .2s ease;
+  }
+  .btn-copy:hover{background:var(--green-deep)}
+  .btn-copy.copied{background:var(--green-deep)}
+
+  /* ---------- checklist ---------- */
+  .check-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:22px;
+    margin-top:14px;
+  }
+  .check-item{
+    display:flex;
+    align-items:flex-start;
+    gap:12px;
+    padding:11px 4px;
+    border-bottom:1px dashed var(--line);
+    cursor:pointer;
+  }
+  .check-item:last-of-type{border-bottom:0}
+  .check-item .kit-check{width:24px;height:24px;margin-top:1px;cursor:pointer}
+  .check-item.done .kit-check{background:var(--green);border-color:var(--green)}
+  .check-item.done .kit-check:after{
+    content:"";
+    position:absolute;
+    left:6px;top:2px;
+    width:6px;height:11px;
+    border:solid #fff;
+    border-width:0 3px 3px 0;
+    transform:rotate(45deg);
+  }
+  .check-item span{font-size:15px}
+  .check-item.done span{color:var(--ink-soft);text-decoration:line-through;text-decoration-color:var(--green)}
+  .btn-ghost{
+    margin-top:16px;
+    background:transparent;
+    border:1px solid var(--line);
+    color:var(--ink);
+    border-radius:10px;
+    font-size:14px;
+    font-weight:600;
+    padding:11px 20px;
+    min-height:44px;
+  }
+  .btn-ghost:hover{border-color:var(--ink-soft)}
+
+  /* ---------- fecho ---------- */
+  .footer{
+    border-top:1px solid var(--line);
+    padding:36px 0 54px;
+    text-align:center;
+  }
+  .footer .mono{font-size:12px;color:var(--ink-soft);letter-spacing:.1em;text-transform:uppercase}
+
+  /* ---------- gate modal ---------- */
+  .gate{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    background:rgba(22,33,46,.55);
+    display:flex;
+    align-items:flex-start;
+    justify-content:center;
+    overflow-y:auto;
+    padding:24px 16px;
+    -webkit-overflow-scrolling:touch;
+  }
+  .gate[hidden]{display:none}
+  .gate-card{
+    background:var(--card);
+    border-radius:18px;
+    max-width:520px;
+    width:100%;
+    padding:28px 24px 30px;
+    margin:auto 0;
+    box-shadow:0 24px 60px rgba(22,33,46,.35);
+  }
+  .gate-card h2{font-size:24px;margin-top:10px}
+  .gate-frame{font-size:14px;color:var(--ink-soft);margin-top:10px}
+  .gate-frame strong{color:var(--ink)}
+  .gate .field label .req{color:var(--green-deep)}
+  .field-err{
+    display:none;
+    font-size:12px;
+    color:#B23A3A;
+    margin-top:5px;
+    font-weight:600;
+  }
+  .field.invalid .field-err{display:block}
+  .field.invalid input,.field.invalid select{border-color:#B23A3A}
+  .consent{
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    margin-top:18px;
+    font-size:13px;
+    color:var(--ink-soft);
+    cursor:pointer;
+  }
+  .consent input{
+    width:20px;height:20px;
+    margin-top:2px;
+    flex:none;
+    accent-color:var(--green);
+  }
+  .btn-primary{
+    display:block;
+    width:100%;
+    margin-top:20px;
+    background:var(--green);
+    color:#fff;
+    border:0;
+    border-radius:12px;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:17px;
+    font-weight:600;
+    padding:15px 20px;
+    min-height:52px;
+    transition:background .2s ease;
+  }
+  .btn-primary:hover{background:var(--green-deep)}
+  .btn-primary[disabled]{opacity:.6;cursor:wait}
+
+  /* diagnóstico */
+  .diag[hidden]{display:none}
+  .diag-badge{
+    display:inline-block;
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--green-deep);
+    background:var(--green-soft);
+    border-radius:99px;
+    padding:4px 12px;
+  }
+  .diag h2{font-size:22px;margin-top:12px}
+  .diag .diag-text{
+    margin-top:12px;
+    font-size:15px;
+    color:var(--ink-soft);
+    background:var(--green-soft);
+    border-left:4px solid var(--green);
+    border-radius:10px;
+    padding:14px 16px;
+  }
+  .diag .diag-text strong{color:var(--ink)}
+
+  /* motion */
+  @media (prefers-reduced-motion:reduce){
+    *{transition:none !important;animation:none !important;scroll-behavior:auto !important}
+  }
+
+  /* responsivo */
+  @media (max-width:720px){
+    .howto-grid{grid-template-columns:1fr}
+    section{padding:32px 0}
+    .hero{padding:40px 0 28px}
+  }
+  @media (max-width:400px){
+    .wrap{padding:0 14px}
+    .gate-card{padding:22px 16px 24px}
+    .kit-block{padding:14px 12px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ BARRA DE PROGRESSO FIXA ============ -->
+<div class="progress-bar-wrap" role="region" aria-label="Progresso da Missão 48h">
+  <div class="progress-inner">
+    <span class="progress-label">Missão 48h</span>
+    <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressTrack">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+    <span class="progress-pct" id="progressPct">0%</span>
+  </div>
+</div>
+
+<!-- ============ GATE DE CADASTRO + PESQUISA ============ -->
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+  <div class="gate-card">
+
+    <div id="gateForm">
+      <span class="eyebrow">Pesquisa Nacional · Execução 5.0</span>
+      <h2 id="gateTitle">Antes de começar, 30 segundos</h2>
+      <p class="gate-frame">Você está entrando na <strong>maior pesquisa de procrastinação do Brasil</strong>. O Christian já ouviu mais de 44 mil pessoas — agora é a sua vez. Leva 30 segundos, ajuda a melhorar o método, e no fim você recebe <strong>seu diagnóstico</strong>.</p>
+
+      <div class="field" id="fNome">
+        <label for="inNome">Nome <span class="req">*</span></label>
+        <input type="text" id="inNome" autocomplete="name" placeholder="Seu nome">
+        <span class="field-err">Digite seu nome.</span>
+      </div>
+
+      <div class="field" id="fEmail">
+        <label for="inEmail">E-mail <span class="req">*</span></label>
+        <input type="text" id="inEmail" autocomplete="email" inputmode="email" placeholder="voce@email.com">
+        <span class="field-err">Digite um e-mail válido.</span>
+      </div>
+
+      <div class="field" id="fZap">
+        <label for="inZap">WhatsApp (com DDD) <span class="req">*</span></label>
+        <input type="text" id="inZap" autocomplete="tel" inputmode="tel" placeholder="(11) 99999-9999">
+        <span class="field-err">Digite seu WhatsApp com DDD (mínimo 10 dígitos).</span>
+      </div>
+
+      <div class="field" id="fProf">
+        <label for="inProf">Profissão <span class="req">*</span></label>
+        <select id="inProf">
+          <option value="">Selecione…</option>
+          <option>Analista/Técnico</option>
+          <option>Empreendedor(a)</option>
+          <option>Gerente/Diretor(a)</option>
+          <option>Profissional Liberal</option>
+          <option>Profissional de RH</option>
+          <option>CLT Operacional</option>
+          <option>Consultor(a)/Mentor(a)</option>
+          <option>Estudante</option>
+          <option>CLT Coordenação</option>
+          <option>Outro</option>
+        </select>
+        <span class="field-err">Selecione sua profissão.</span>
+      </div>
+
+      <div class="field" id="fProcr">
+        <label for="inProcr">O que você mais procrastina hoje? <span class="req">*</span></label>
+        <select id="inProcr">
+          <option value="">Selecione…</option>
+          <option>Academia/exercício</option>
+          <option>Leitura</option>
+          <option>Saúde/exames</option>
+          <option>Mudanças pessoais</option>
+          <option>Planejamento financeiro</option>
+          <option>Idiomas</option>
+          <option>Cursos/estudos</option>
+          <option>Tarefas do trabalho</option>
+          <option>Relacionamentos</option>
+          <option>Outro</option>
+        </select>
+        <span class="field-err">Selecione uma opção.</span>
+      </div>
+
+      <div class="field" id="fMotivo">
+        <label for="inMotivo">Por que você acha que não faz? <span class="req">*</span></label>
+        <select id="inMotivo">
+          <option value="">Selecione…</option>
+          <option data-tip="foco">Perco o foco nas redes</option>
+          <option data-tip="energia">Falta energia</option>
+          <option data-tip="preguica">Preguiça</option>
+          <option data-tip="multi">Multitarefa/falta tempo</option>
+          <option data-tip="info">Busco mais informação antes</option>
+          <option data-tip="urgencia">Só foco nas urgências</option>
+          <option data-tip="importancia">Não vejo importância</option>
+          <option data-tip="medo">Medo do que pode gerar</option>
+          <option data-tip="outro">Outro</option>
+        </select>
+        <span class="field-err">Selecione uma opção.</span>
+      </div>
+
+      <div class="field" id="fConsent" style="margin-top:6px">
+        <label class="consent" for="inConsent">
+          <input type="checkbox" id="inConsent">
+          <span>Autorizo o uso das minhas respostas, de forma anônima, para pesquisa e melhoria do método Execução 5.0. <span class="req">*</span></span>
+        </label>
+        <span class="field-err">É preciso autorizar para participar da pesquisa.</span>
+      </div>
+
+      <button type="button" class="btn-primary" id="btnGate">Receber meu diagnóstico →</button>
+    </div>
+
+    <div class="diag" id="gateDiag" hidden>
+      <span class="diag-badge">Seu diagnóstico</span>
+      <h2 id="diagTitle">Pronto.</h2>
+      <div class="diag-text" id="diagText"></div>
+      <button type="button" class="btn-primary" id="btnStart">Começar minha missão de 48h →</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ============ HERO ============ -->
+  <header class="hero">
+    <span class="eyebrow">Bônus 1 · Execução 5.0</span>
+    <h1>Kit de Execução Imediata</h1>
+    <p class="lede">O maior inimigo da execução não é a preguiça — é <strong>não saber por onde começar</strong>. Este kit resolve isso em 48 horas: uma tarefa, um mapa, micro-passos de 5 minutos e a Inteligência Artificial do seu lado quando travar.</p>
+    <div class="hero-sign">
+      <p>"Você não precisa de mais motivação. Precisa de um primeiro passo pequeno o bastante pra não ter como fugir dele. Escolha uma tarefa e me acompanhe pelas próximas 48 horas."</p>
+      <p class="who">— Christian Barbosa</p>
+    </div>
+  </header>
+
+  <!-- ============ COMO USAR ============ -->
+  <section id="como-usar" aria-labelledby="h-como">
+    <div class="section-head">
+      <span class="eyebrow">Como usar</span>
+      <h2 id="h-como">Três movimentos. Só isso.</h2>
+    </div>
+    <div class="howto-grid">
+      <div class="howto-card">
+        <span class="howto-num">01</span>
+        <h3>Escolha 1 tarefa</h3>
+        <p>Uma só. A que você mais vem adiando. Nada de lista — o kit trabalha uma tarefa por vez.</p>
+      </div>
+      <div class="howto-card">
+        <span class="howto-num">02</span>
+        <h3>Siga a missão</h3>
+        <p>O Mapa de 48 Horas diz exatamente o que fazer, em blocos curtos. Marque cada bloco e veja a barra encher.</p>
+      </div>
+      <div class="howto-card">
+        <span class="howto-num">03</span>
+        <h3>Chame a Inteligência Artificial quando travar</h3>
+        <p>Cinco prompts prontos pra copiar. Travou? Tem um prompt pra cada tipo de trava.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MAPA DE 48 HORAS ============ -->
+  <section id="mapa-48h" aria-labelledby="h-mapa">
+    <div class="section-head">
+      <span class="eyebrow">O coração do kit</span>
+      <h2 id="h-mapa">Mapa de 48 Horas</h2>
+      <p class="section-sub">Marque cada bloco conforme concluir. Cada clique enche a barra "Missão 48h" lá em cima — procrastinação virando movimento visível.</p>
+    </div>
+
+    <span class="day-label">Preparo · Hora 0</span>
+    <div class="timeline">
+      <div class="kit-block" data-block="0">
+        <button type="button" class="kit-check" role="checkbox" aria-checked="false" aria-label="Marcar bloco: Escolher"></button>
+        <div>
+          <div class="kit-meta"><span class="kit-time">2 min</span><span class="kit-phase">Escolher</span></div>
+          <h3>Escolha UMA tarefa que você vem adiando</h3>
+          <p>A que mais te incomoda. Nada complexo (não é "aprender inglês"). Algo pontual: relatório, vídeo, conversa, e-mail. Anote no Template 1.</p>
+        </div>
+      </div>
+    </div>
+
+    <span class="day-label">Dia 1 · Destravar</span>
+    <div class="timeline">
+      <div class="kit-block" data-block="1">
+        <button type="button" class="kit-check" role="checkbox" aria-checked="false" aria-label="Marcar bloco: Clarificar"></button>
+        <div>
+          <div class="kit-meta"><span class="kit-time">5 min</span><span class="kit-phase">Clarificar</span></div>
+          <h3>Transforme a tarefa vaga em uma frase específica</h3>
+          <p>"Organizar minha vida" trava; "fazer o relatório do projeto X até sexta" destrava. Preencha o Template 1.</p>
+        </div>
+      </div>
+      <div class="kit-block" data-block="2">
+        <button type="button" class="kit-check" role="checkbox" aria-checked="false" aria-label="Marcar bloco: Quebrar"></button>
+        <div>
+          <div class="kit-meta"><span class="kit-time">5 min</span><span class="kit-phase">Quebrar</span></div>
+          <h3>Rode o Prompt 2 na Inteligência Artificial</h3>
+          <p>Ela quebra a tarefa em micro-passos. Anote os 3 primeiros no Template 2.</p>
+        </div>
+      </div>
+      <div class="kit-block" data-block="3">
+        <button type="button" class="kit-check" role="checkbox" aria-checked="false" aria-label="Marcar bloco: Executar"></button>
+        <div>
+          <div class="kit-meta"><span class="kit-time">20 min</span><span class="kit-phase">Executar</span></div>
+          <h3>Faça só o primeiro micro-passo. Só ele.</h3>
+          <p>A resistência aparece na hora da ação, e um passo de 5 min é pequeno demais pra travar.</p>
+        </div>
+      </div>
+      <div class="kit-block" data-block="4">
+        <button type="button" class="kit-check" role="checkbox" aria-checked="false" aria-label="Marcar bloco: Mentalizar"></button>
+        <div>
+          <div class="kit-meta"><span class="kit-time">5 min</span><span class="kit-phase">Mentalizar</span></div>
+          <h3>Escreva por que essa tarefa importa</h3>
+          <p>Sem conexão com o motivo real, ela continua pesada. Preencha o Template 3.</p>
+        </div>
+      </div>
+      <div class="kit-block" data-block="5">
+        <button type="button" class="kit-check" role="checkbox" aria-checked="false" aria-label="Marcar bloco: Avançar"></button>
+        <div>
+          <div class="kit-meta"><span class="kit-time">20 min</span><span class="kit-phase">Avançar</span></div>
+          <h3>Faça o segundo micro-passo</h3>
+          <p>Um passo puxa o outro.</p>
+        </div>
+      </div>
+    </div>
+
+    <span class="day-label">Dia 2 · Ganhar ritmo</span>
+    <div class="timeline">
+      <div class="kit-block" data-block="6">
+        <button type="button" class="kit-check" role="checkbox" aria-checked="false" aria-label="Marcar bloco: Retomar"></button>
+        <div>
+          <div class="kit-meta"><span class="kit-time">3 min</span><span class="kit-phase">Retomar</span></div>
+          <h3>Releia sua tarefa clarificada e seu motivo</h3>
+          <p>Templates 1 e 3. Reconectar antes de agir.</p>
+        </div>
+      </div>
+      <div class="kit-block" data-block="7">
+        <button type="button" class="kit-check" role="checkbox" aria-checked="false" aria-label="Marcar bloco: Executar"></button>
+        <div>
+          <div class="kit-meta"><span class="kit-time">20 min</span><span class="kit-phase">Executar</span></div>
+          <h3>Avance no próximo bloco</h3>
+          <p>Regra: nada além de 20 min por bloco.</p>
+        </div>
+      </div>
+      <div class="kit-block" data-block="8">
+        <button type="button" class="kit-check" role="checkbox" aria-checked="false" aria-label="Marcar bloco: Se travar"></button>
+        <div>
+          <div class="kit-meta"><span class="kit-time">5 min</span><span class="kit-phase">Se travar</span></div>
+          <h3>Travou? Tem prompt pra isso</h3>
+          <p>Medo? Rode o Prompt 3. Falta de recompensa? Rode o Prompt 4.</p>
+        </div>
+      </div>
+      <div class="kit-block" data-block="9">
+        <button type="button" class="kit-check" role="checkbox" aria-checked="false" aria-label="Marcar bloco: Fechar"></button>
+        <div>
+          <div class="kit-meta"><span class="kit-time">20 min</span><span class="kit-phase">Fechar</span></div>
+          <h3>Termine o que der</h3>
+          <p>Anote o próximo passo pra amanhã.</p>
+        </div>
+      </div>
+      <div class="kit-block" data-block="10">
+        <button type="button" class="kit-check" role="checkbox" aria-checked="false" aria-label="Marcar bloco: Ritual"></button>
+        <div>
+          <div class="kit-meta"><span class="kit-time">3 min</span><span class="kit-phase">Ritual</span></div>
+          <h3>Rode a Checklist Diária</h3>
+          <p>Está no fim desta página. Sete itens, três minutos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TEMPLATES ============ -->
+  <section id="templates" aria-labelledby="h-tpl">
+    <div class="section-head">
+      <span class="eyebrow">Templates prontos</span>
+      <h2 id="h-tpl">Preencha aqui. Fica salvo no seu navegador.</h2>
+    </div>
+
+    <div class="tpl-card">
+      <h3>Template 1 — Tarefa Clarificada</h3>
+      <p class="tpl-hint">Do vago pro específico. É aqui que a trava começa a soltar.</p>
+      <div class="field">
+        <label for="tpl1a">Minha tarefa vaga (como ela aparece na sua cabeça)</label>
+        <input type="text" id="tpl1a" data-store="tpl1a" placeholder="Ex.: organizar as finanças">
+      </div>
+      <div class="field">
+        <label for="tpl1b">Minha tarefa específica (o quê + até quando)</label>
+        <input type="text" id="tpl1b" data-store="tpl1b" placeholder="Ex.: montar a planilha de gastos de junho até sexta às 18h">
+      </div>
+      <p class="save-note" data-save-note>✓ salvo</p>
+    </div>
+
+    <div class="tpl-card">
+      <h3>Template 2 — Meus 3 micro-passos de 5 minutos</h3>
+      <p class="tpl-hint">Use o Prompt 2 pra gerar e anote os três primeiros aqui.</p>
+      <div class="field">
+        <label for="tpl2a">Micro-passo 1</label>
+        <input type="text" id="tpl2a" data-store="tpl2a" placeholder="Ex.: abrir a planilha e criar as colunas">
+      </div>
+      <div class="field">
+        <label for="tpl2b">Micro-passo 2</label>
+        <input type="text" id="tpl2b" data-store="tpl2b" placeholder="Ex.: lançar os gastos da primeira semana">
+      </div>
+      <div class="field">
+        <label for="tpl2c">Micro-passo 3</label>
+        <input type="text" id="tpl2c" data-store="tpl2c" placeholder="Ex.: lançar os gastos da segunda semana">
+      </div>
+      <p class="save-note" data-save-note>✓ salvo</p>
+    </div>
+
+    <div class="tpl-card">
+      <h3>Template 3 — Meu motivo real</h3>
+      <p class="tpl-hint">Tarefa sem motivo é peso. Tarefa com motivo é caminho.</p>
+      <div class="field">
+        <label for="tpl3a">Isso é importante porque…</label>
+        <textarea id="tpl3a" data-store="tpl3a" placeholder="Ex.: sem controle dos gastos eu não consigo planejar a mudança"></textarea>
+      </div>
+      <div class="field">
+        <label for="tpl3b">Quando eu terminar, eu ganho…</label>
+        <textarea id="tpl3b" data-store="tpl3b" placeholder="Ex.: clareza pra decidir o próximo passo e paz no fim do mês"></textarea>
+      </div>
+      <p class="save-note" data-save-note>✓ salvo</p>
+    </div>
+  </section>
+
+  <!-- ============ PROMPTS ============ -->
+  <section id="prompts" aria-labelledby="h-prompts">
+    <div class="section-head">
+      <span class="eyebrow">Inteligência Artificial a seu favor</span>
+      <h2 id="h-prompts">5 prompts pra destravar qualquer tarefa</h2>
+      <p class="section-sub">Copie, cole na sua Inteligência Artificial preferida (ChatGPT, Claude, Gemini…) e substitua o trecho destacado pela sua tarefa.</p>
+    </div>
+
+    <div class="prompt-card">
+      <h3><span class="prompt-num">Prompt 1</span> Diagnóstico: por que eu não faço?</h3>
+      <p class="prompt-when">Use quando nem sabe por que está travando.</p>
+      <div class="prompt-body" id="pb1">Atue como mentor especialista em produtividade, baseado no livro "Por Que as Pessoas Não Fazem o Que Deveriam Fazer" e na metodologia Tríade do Tempo, do Christian Barbosa.
+
+Estou procrastinando esta tarefa: <span class="ph">[DESCREVA SUA TAREFA]</span>.
+
+Me ajude a diagnosticar o motivo principal pelo qual eu não a executo. Considere as causas mais comuns: falta de clareza, medo, ausência de recompensa, tarefa grande demais ou falta de conexão com o que importa pra mim.
+
+Faça perguntas objetivas, uma de cada vez, e ao final me diga qual é o meu bloqueio principal e o primeiro passo prático pra destravar. Seja direto, sem floreio.</div>
+      <button type="button" class="btn-copy" data-copy="pb1">Copiar prompt</button>
+    </div>
+
+    <div class="prompt-card">
+      <h3><span class="prompt-num">Prompt 2</span> Quebrar a tarefa em micro-passos</h3>
+      <p class="prompt-when">Use quando a tarefa parece grande demais.</p>
+      <div class="prompt-body" id="pb2">Atue como mentor especialista em produtividade, baseado no livro "Por Que as Pessoas Não Fazem o Que Deveriam Fazer" e na metodologia Tríade do Tempo, do Christian Barbosa.
+
+Preciso executar esta tarefa: <span class="ph">[DESCREVA SUA TAREFA]</span>.
+
+Quebre essa tarefa em passos pequenos e ordenados, cada um com no máximo 20 minutos. Os 3 primeiros passos devem ter no máximo 5 minutos cada — pequenos demais pra eu conseguir fugir deles.
+
+Liste os passos numerados, com o tempo estimado de cada um, e me diga exatamente por qual começar agora.</div>
+      <button type="button" class="btn-copy" data-copy="pb2">Copiar prompt</button>
+    </div>
+
+    <div class="prompt-card">
+      <h3><span class="prompt-num">Prompt 3</span> Vencer o medo escondido</h3>
+      <p class="prompt-when">Use quando sabe o que fazer mas algo trava por dentro.</p>
+      <div class="prompt-body" id="pb3">Atue como mentor especialista em produtividade, baseado no livro "Por Que as Pessoas Não Fazem o Que Deveriam Fazer" e na metodologia Tríade do Tempo, do Christian Barbosa.
+
+Estou adiando esta tarefa: <span class="ph">[DESCREVA SUA TAREFA]</span> — e acho que o motivo é medo, mesmo que eu não admita isso com clareza.
+
+Liste os medos escondidos mais prováveis por trás desse adiamento (medo de errar, de ser julgado, do resultado, do que vem depois…). Pra cada medo, responda com uma ação concreta e pequena que eu posso fazer hoje pra neutralizá-lo.
+
+Seja direto e prático. Nada de motivação vazia.</div>
+      <button type="button" class="btn-copy" data-copy="pb3">Copiar prompt</button>
+    </div>
+
+    <div class="prompt-card">
+      <h3><span class="prompt-num">Prompt 4</span> Micro vitórias: recompensa agora</h3>
+      <p class="prompt-when">Use quando a tarefa só dá resultado lá na frente e por isso não anda.</p>
+      <div class="prompt-body" id="pb4">Atue como mentor especialista em produtividade, baseado no livro "Por Que as Pessoas Não Fazem o Que Deveriam Fazer" e na metodologia Tríade do Tempo, do Christian Barbosa.
+
+Esta tarefa só traz recompensa no longo prazo, e por isso eu não começo: <span class="ph">[DESCREVA SUA TAREFA]</span>.
+
+Quebre essa tarefa em micro vitórias — etapas pequenas que geram uma sensação real de recompensa no momento presente, não só no futuro. Pra cada micro vitória, diga o que eu ganho ao concluí-la hoje.
+
+Monte a sequência de forma que cada vitória puxe a próxima.</div>
+      <button type="button" class="btn-copy" data-copy="pb4">Copiar prompt</button>
+    </div>
+
+    <div class="prompt-card">
+      <h3><span class="prompt-num">Prompt 5</span> Essa tarefa vale mesmo a pena?</h3>
+      <p class="prompt-when">Use quando desconfia que está adiando porque a tarefa não importa de verdade.</p>
+      <div class="prompt-body" id="pb5">Atue como mentor especialista em produtividade, baseado no livro "Por Que as Pessoas Não Fazem o Que Deveriam Fazer" e na metodologia Tríade do Tempo, do Christian Barbosa.
+
+Venho adiando esta tarefa há tempos: <span class="ph">[DESCREVA SUA TAREFA]</span>.
+
+Me questione com perguntas diretas sobre a importância real dela: o que acontece se eu nunca fizer? Ela me aproxima do que é importante pra mim ou é só urgência ou obrigação dos outros?
+
+Se ao final ficar claro que ela não é importante de verdade, me dê os motivos objetivos pra cancelá-la ou delegá-la sem culpa. Se for importante, me diga o primeiro passo de 5 minutos pra começar agora.</div>
+      <button type="button" class="btn-copy" data-copy="pb5">Copiar prompt</button>
+    </div>
+  </section>
+
+  <!-- ============ CHECKLIST DIÁRIA ============ -->
+  <section id="checklist" aria-labelledby="h-check">
+    <div class="section-head">
+      <span class="eyebrow">Ritual de fechamento</span>
+      <h2 id="h-check">Checklist Diária de Execução</h2>
+      <p class="section-sub">Rode no fim do dia. Três minutos que mantêm o ritmo vivo.</p>
+    </div>
+    <div class="check-card">
+      <div class="check-item" data-check="0" role="checkbox" aria-checked="false" tabindex="0">
+        <span class="kit-check" aria-hidden="true"></span>
+        <span>Defini a tarefa mais importante do dia (só uma)</span>
+      </div>
+      <div class="check-item" data-check="1" role="checkbox" aria-checked="false" tabindex="0">
+        <span class="kit-check" aria-hidden="true"></span>
+        <span>Clarifiquei essa tarefa (específica e concreta)</span>
+      </div>
+      <div class="check-item" data-check="2" role="checkbox" aria-checked="false" tabindex="0">
+        <span class="kit-check" aria-hidden="true"></span>
+        <span>Quebrei em micro-passo de 5 minutos</span>
+      </div>
+      <div class="check-item" data-check="3" role="checkbox" aria-checked="false" tabindex="0">
+        <span class="kit-check" aria-hidden="true"></span>
+        <span>Mentalizei o motivo real de fazer</span>
+      </div>
+      <div class="check-item" data-check="4" role="checkbox" aria-checked="false" tabindex="0">
+        <span class="kit-check" aria-hidden="true"></span>
+        <span>Executei o primeiro passo</span>
+      </div>
+      <div class="check-item" data-check="5" role="checkbox" aria-checked="false" tabindex="0">
+        <span class="kit-check" aria-hidden="true"></span>
+        <span>Usei a Inteligência Artificial quando travei</span>
+      </div>
+      <div class="check-item" data-check="6" role="checkbox" aria-checked="false" tabindex="0">
+        <span class="kit-check" aria-hidden="true"></span>
+        <span>Reconheci uma micro vitória de hoje</span>
+      </div>
+      <button type="button" class="btn-ghost" id="btnClearChecklist">Limpar ritual pra amanhã</button>
+    </div>
+  </section>
+
+  <!-- ============ FECHO ============ -->
+  <footer class="footer">
+    <p style="font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px">Feito é melhor que perfeito. Agora vai.</p>
+    <p class="mono" style="margin-top:10px">Execução 5.0 · Christian Barbosa · Procrastinação</p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* =====================================================
+     CONFIGURAÇÃO SUPABASE — PREENCHA ANTES DE PUBLICAR
+     Use SOMENTE a chave anon (public). NUNCA coloque a
+     service_role aqui: este arquivo é público e qualquer
+     aluno pode ler o código-fonte. A leitura dos dados da
+     pesquisa acontece depois, em ambiente privado.
+     Com os valores de exemplo abaixo, o kit funciona
+     normalmente — só não envia dados (modo de teste).
+  ===================================================== */
+  var SUPABASE_URL  = 'https://SEU-PROJETO.supabase.co';   // <-- troque
+  var SUPABASE_ANON = 'COLE_AQUI_A_CHAVE_ANON_PUBLIC';     // <-- troque
+  var SUPABASE_TABLE = 'alunos_execucao5';
+  // Tag gravada em todo cadastro: identifica que a pessoa participou do Bônus 1
+  var TAG_BONUS = 'bonus1_kit_execucao';
+
+  var supabaseAtivo = SUPABASE_URL.indexOf('SEU-PROJETO') === -1 &&
+                      SUPABASE_ANON.indexOf('COLE_AQUI') === -1;
+
+  /* ---------- storage seguro (fallback em memória) ---------- */
+  var memStore = {};
+  function storeGet(k){
+    try { return window.localStorage.getItem(k); }
+    catch(e){ return memStore.hasOwnProperty(k) ? memStore[k] : null; }
+  }
+  function storeSet(k,v){
+    try { window.localStorage.setItem(k,v); }
+    catch(e){ /* storage bloqueado */ }
+    memStore[k]=v;
+  }
+  function storeRemove(k){
+    try { window.localStorage.removeItem(k); }
+    catch(e){}
+    delete memStore[k];
+  }
+
+  var KEY_PREFIX = 'kit_exec5_';
+  function K(name){ return KEY_PREFIX + name; }
+
+  /* ---------- helpers ---------- */
+  function $(id){ return document.getElementById(id); }
+  function all(sel){ return document.querySelectorAll(sel); }
+  function on(el,ev,fn){ if(el){ el.addEventListener(ev,fn,false); } }
+
+  /* =====================================================
+     SUPABASE — REST via XMLHttpRequest (falha em silêncio:
+     nunca pode quebrar a experiência do aluno)
+  ===================================================== */
+  function sbRequest(method, path, body, prefer, cb){
+    if(!supabaseAtivo){ if(cb){cb(null);} return; }
+    try{
+      var xhr = new XMLHttpRequest();
+      xhr.open(method, SUPABASE_URL + '/rest/v1/' + path, true);
+      xhr.setRequestHeader('apikey', SUPABASE_ANON);
+      xhr.setRequestHeader('Authorization', 'Bearer ' + SUPABASE_ANON);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      if(prefer){ xhr.setRequestHeader('Prefer', prefer); }
+      xhr.onreadystatechange = function(){
+        if(xhr.readyState === 4){
+          var data = null;
+          if(xhr.status >= 200 && xhr.status < 300 && xhr.responseText){
+            try { data = JSON.parse(xhr.responseText); } catch(e){}
+          }
+          if(cb){ cb(data); }
+        }
+      };
+      xhr.send(body ? JSON.stringify(body) : null);
+    }catch(e){ if(cb){cb(null);} }
+  }
+
+  function sbInsertAluno(registro, cb){
+    sbRequest('POST', SUPABASE_TABLE, registro, 'return=representation', function(data){
+      if(data && data.length && data[0] && data[0].id){
+        storeSet(K('sb_id'), data[0].id);
+      }
+      if(cb){ cb(); }
+    });
+  }
+
+  var patchTimer = null;
+  function sbPatchProgresso(){
+    var id = storeGet(K('sb_id'));
+    if(!id){ return; }
+    if(patchTimer){ clearTimeout(patchTimer); }
+    patchTimer = setTimeout(function(){
+      var tarefa = storeGet(K('tpl1b')) || '';
+      sbRequest('PATCH', SUPABASE_TABLE + '?id=eq.' + encodeURIComponent(id), {
+        progresso_48h: countDoneBlocks(),
+        tarefa_clarificada: tarefa
+      }, null, null);
+    }, 1200);
+  }
+
+  /* =====================================================
+     BARRA DE PROGRESSO + MAPA 48H
+  ===================================================== */
+  var blocks = all('.kit-block');
+  var TOTAL_BLOCKS = blocks.length;
+
+  function countDoneBlocks(){
+    var n = 0, i;
+    for(i=0;i<blocks.length;i++){
+      if(blocks[i].className.indexOf('done') !== -1){ n++; }
+    }
+    return n;
+  }
+
+  function renderProgress(){
+    var done = countDoneBlocks();
+    var pct = TOTAL_BLOCKS ? Math.round(done / TOTAL_BLOCKS * 100) : 0;
+    $('progressFill').style.width = pct + '%';
+    $('progressPct').textContent = pct + '%';
+    $('progressTrack').setAttribute('aria-valuenow', String(pct));
+  }
+
+  function setBlockDone(block, done, persist){
+    var idx = block.getAttribute('data-block');
+    var btn = block.querySelector('.kit-check');
+    if(done){
+      if(block.className.indexOf('done') === -1){ block.className += ' done'; }
+    } else {
+      block.className = block.className.replace(/\s*\bdone\b/,'');
+    }
+    if(btn){ btn.setAttribute('aria-checked', done ? 'true' : 'false'); }
+    if(persist){
+      storeSet(K('block_' + idx), done ? '1' : '0');
+      renderProgress();
+      sbPatchProgresso();
+    }
+  }
+
+  (function initBlocks(){
+    var i;
+    for(i=0;i<blocks.length;i++){
+      (function(block){
+        var idx = block.getAttribute('data-block');
+        if(storeGet(K('block_' + idx)) === '1'){ setBlockDone(block, true, false); }
+        var btn = block.querySelector('.kit-check');
+        on(btn,'click',function(){
+          setBlockDone(block, block.className.indexOf('done') === -1, true);
+        });
+      })(blocks[i]);
+    }
+    renderProgress();
+  })();
+
+  /* =====================================================
+     TEMPLATES — persistência com nota "salvo"
+  ===================================================== */
+  (function initTemplates(){
+    var fields = all('[data-store]');
+    var i;
+    for(i=0;i<fields.length;i++){
+      (function(field){
+        var key = field.getAttribute('data-store');
+        var saved = storeGet(K(key));
+        if(saved !== null){ field.value = saved; }
+        var noteTimer = null;
+        on(field,'input',function(){
+          storeSet(K(key), field.value);
+          if(key === 'tpl1b'){ sbPatchProgresso(); }
+          var card = field.parentNode;
+          while(card && card.className.indexOf('tpl-card') === -1){ card = card.parentNode; }
+          if(card){
+            var note = card.querySelector('[data-save-note]');
+            if(note){
+              note.className = 'save-note show';
+              if(noteTimer){ clearTimeout(noteTimer); }
+              noteTimer = setTimeout(function(){ note.className = 'save-note'; }, 1500);
+            }
+          }
+        });
+      })(fields[i]);
+    }
+  })();
+
+  /* =====================================================
+     PROMPTS — botão copiar com fallback
+  ===================================================== */
+  function copyText(text, btn){
+    function feedback(ok){
+      var original = 'Copiar prompt';
+      btn.textContent = ok ? '✓ Copiado!' : 'Não deu — selecione e copie manualmente';
+      btn.className = 'btn-copy copied';
+      setTimeout(function(){
+        btn.textContent = original;
+        btn.className = 'btn-copy';
+      }, 2200);
+    }
+    var used = false;
+    try{
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        used = true;
+        navigator.clipboard.writeText(text).then(function(){ feedback(true); }, function(){ fallback(); });
+      }
+    }catch(e){}
+    if(!used){ fallback(); }
+    function fallback(){
+      try{
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.setAttribute('readonly','');
+        ta.style.position = 'fixed';
+        ta.style.left = '-9999px';
+        document.body.appendChild(ta);
+        ta.select();
+        ta.setSelectionRange(0, text.length);
+        var ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        feedback(ok);
+      }catch(e2){ feedback(false); }
+    }
+  }
+
+  (function initCopy(){
+    var btns = all('[data-copy]');
+    var i;
+    for(i=0;i<btns.length;i++){
+      (function(btn){
+        on(btn,'click',function(){
+          var body = $(btn.getAttribute('data-copy'));
+          if(body){
+            var text = body.textContent || body.innerText || '';
+            copyText(text.replace(/^\s+|\s+$/g,''), btn);
+          }
+        });
+      })(btns[i]);
+    }
+  })();
+
+  /* =====================================================
+     CHECKLIST DIÁRIA
+  ===================================================== */
+  (function initChecklist(){
+    var items = all('.check-item');
+    var i;
+    function setItem(item, done, persist){
+      var idx = item.getAttribute('data-check');
+      if(done){
+        if(item.className.indexOf('done') === -1){ item.className += ' done'; }
+      } else {
+        item.className = item.className.replace(/\s*\bdone\b/,'');
+      }
+      item.setAttribute('aria-checked', done ? 'true' : 'false');
+      if(persist){ storeSet(K('daily_' + idx), done ? '1' : '0'); }
+    }
+    for(i=0;i<items.length;i++){
+      (function(item){
+        var idx = item.getAttribute('data-check');
+        if(storeGet(K('daily_' + idx)) === '1'){ setItem(item, true, false); }
+        function toggle(){ setItem(item, item.className.indexOf('done') === -1, true); }
+        on(item,'click',toggle);
+        on(item,'keydown',function(ev){
+          if(ev.key === ' ' || ev.key === 'Enter' || ev.keyCode === 32 || ev.keyCode === 13){
+            ev.preventDefault();
+            toggle();
+          }
+        });
+      })(items[i]);
+    }
+    on($('btnClearChecklist'),'click',function(){
+      var j;
+      for(j=0;j<items.length;j++){
+        setItem(items[j], false, false);
+        storeRemove(K('daily_' + items[j].getAttribute('data-check')));
+      }
+    });
+  })();
+
+  /* =====================================================
+     GATE — cadastro + pesquisa + diagnóstico
+  ===================================================== */
+  var DIAGNOSTICOS = {
+    foco: {
+      titulo: 'Seu bloqueio: dispersão',
+      texto: '<strong>Você não tem um problema de preguiça — tem um problema de foco fatiado.</strong> A saída é encolher o passo: quebre a tarefa em micro-passos de 5 minutos (rode o <strong>Prompt 2</strong>), deixe o celular em outro cômodo e execute só o primeiro passo. Cinco minutos focados valem mais que uma hora picada.'
+    },
+    energia: {
+      titulo: 'Seu bloqueio: energia',
+      texto: '<strong>Tarefa pesada em hora errada não anda.</strong> Faça o primeiro micro-passo no seu melhor horário do dia — e que ele tenha só 5 minutos (rode o <strong>Prompt 2</strong>). Energia baixa pede passo pequeno, não força de vontade.'
+    },
+    preguica: {
+      titulo: 'Seu bloqueio: começar',
+      texto: '<strong>O que parece preguiça quase sempre é uma tarefa grande demais.</strong> Ninguém tem preguiça de um passo de 5 minutos. Rode o <strong>Prompt 2</strong>, pegue só o primeiro micro-passo e faça agora. O resto vem atrás.'
+    },
+    multi: {
+      titulo: 'Seu bloqueio: excesso',
+      texto: '<strong>Quem tenta fazer tudo não termina nada.</strong> Escolha UMA tarefa — a que mais te incomoda — e feche o resto. O Mapa de 48 Horas foi feito exatamente pra isso: uma tarefa, blocos curtos, um passo de cada vez.'
+    },
+    info: {
+      titulo: 'Seu bloqueio: preparação infinita',
+      texto: '<strong>Buscar mais informação é a procrastinação mais disfarçada que existe.</strong> Você já sabe o suficiente pra dar o primeiro passo de 5 minutos. Rode o <strong>Prompt 2</strong> e comece pelo passo 1 — aprende-se fazendo, não pesquisando.'
+    },
+    urgencia: {
+      titulo: 'Seu bloqueio: só apagar incêndio',
+      texto: '<strong>Viver de urgência é deixar os outros decidirem seu dia.</strong> Reserve o primeiro bloco de 20 minutos do dia pra sua tarefa importante — antes das urgências chegarem. Use o <strong>Prompt 5</strong> pra separar o que é importante do que só grita mais alto.'
+    },
+    importancia: {
+      titulo: 'Seu bloqueio: falta de motivo',
+      texto: '<strong>Sem conexão com um motivo real, toda tarefa pesa o dobro.</strong> Preencha o <strong>Template 3</strong> ("isso é importante porque…") e rode o <strong>Prompt 5</strong>. Se a tarefa não for importante de verdade, cancele ou delegue sem culpa. Se for, agora você sabe por quê.'
+    },
+    medo: {
+      titulo: 'Seu bloqueio: medo escondido',
+      texto: '<strong>Você não está adiando a tarefa — está adiando o que ela pode gerar.</strong> Rode o <strong>Prompt 3</strong> agora: ele expõe os medos escondidos e devolve uma ação concreta pra cada um. Medo nomeado encolhe.'
+    },
+    outro: {
+      titulo: 'Seu diagnóstico começa agora',
+      texto: '<strong>Cada trava tem uma causa — e a sua merece um diagnóstico sob medida.</strong> Comece pelo <strong>Prompt 1</strong>: ele faz as perguntas certas, uma de cada vez, e te diz qual é o seu bloqueio principal e o primeiro passo pra destravar.'
+    }
+  };
+
+  function markInvalid(fieldId, invalid){
+    var f = $(fieldId);
+    if(!f){ return; }
+    if(invalid){
+      if(f.className.indexOf('invalid') === -1){ f.className += ' invalid'; }
+    } else {
+      f.className = f.className.replace(/\s*\binvalid\b/,'');
+    }
+  }
+
+  function validaEmail(v){
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+  }
+  function validaZap(v){
+    var digits = v.replace(/\D/g,'');
+    return digits.length >= 10 && digits.length <= 13;
+  }
+
+  (function initGate(){
+    var gate = $('gate');
+    if(storeGet(K('gate_done')) === '1'){
+      gate.hidden = true;
+      return;
+    }
+    document.body.style.overflow = 'hidden';
+
+    on($('btnGate'),'click',function(){
+      var nome = $('inNome').value.replace(/^\s+|\s+$/g,'');
+      var email = $('inEmail').value.replace(/^\s+|\s+$/g,'');
+      var zap = $('inZap').value.replace(/^\s+|\s+$/g,'');
+      var prof = $('inProf').value;
+      var procr = $('inProcr').value;
+      var motivoSel = $('inMotivo');
+      var motivo = motivoSel.value;
+      var consent = $('inConsent').checked;
+
+      var ok = true;
+      markInvalid('fNome', nome.length < 2); if(nome.length < 2){ ok = false; }
+      markInvalid('fEmail', !validaEmail(email)); if(!validaEmail(email)){ ok = false; }
+      markInvalid('fZap', !validaZap(zap)); if(!validaZap(zap)){ ok = false; }
+      markInvalid('fProf', !prof); if(!prof){ ok = false; }
+      markInvalid('fProcr', !procr); if(!procr){ ok = false; }
+      markInvalid('fMotivo', !motivo); if(!motivo){ ok = false; }
+      markInvalid('fConsent', !consent); if(!consent){ ok = false; }
+      if(!ok){
+        var firstInvalid = document.querySelector('.gate .field.invalid input, .gate .field.invalid select');
+        if(firstInvalid){ firstInvalid.focus(); }
+        return;
+      }
+
+      var opt = motivoSel.options[motivoSel.selectedIndex];
+      var tip = opt ? (opt.getAttribute('data-tip') || 'outro') : 'outro';
+
+      var btn = $('btnGate');
+      btn.disabled = true;
+      btn.textContent = 'Enviando…';
+
+      sbInsertAluno({
+        nome: nome,
+        email: email,
+        whatsapp: zap,
+        profissao: prof,
+        mais_procrastina: procr,
+        motivo: motivo,
+        tag: TAG_BONUS,
+        progresso_48h: 0,
+        tarefa_clarificada: '',
+        consentimento: true
+      }, function(){
+        storeSet(K('gate_done'), '1');
+        var d = DIAGNOSTICOS[tip] || DIAGNOSTICOS.outro;
+        $('diagTitle').textContent = d.titulo;
+        $('diagText').innerHTML = d.texto;
+        $('gateForm').style.display = 'none';
+        var diag = $('gateDiag');
+        diag.hidden = false;
+        gate.scrollTop = 0;
+        $('btnStart').focus();
+      });
+    });
+
+    on($('btnStart'),'click',function(){
+      gate.hidden = true;
+      document.body.style.overflow = '';
+    });
+  })();
+
+})();
+</script>
+</body>
+</html>
