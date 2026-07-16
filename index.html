@@ -413,6 +413,36 @@
     -webkit-overflow-scrolling:touch;
   }
   .gate[hidden]{display:none}
+
+  /* ---------- capa ---------- */
+  .gate-cover{
+    background:#0A1420;
+    border-radius:18px;
+    max-width:440px;
+    width:100%;
+    margin:auto 0;
+    overflow:hidden;
+    box-shadow:0 24px 60px rgba(10,20,32,.5);
+  }
+  .gate-cover[hidden]{display:none}
+  .cover-img{
+    display:block;
+    width:100%;
+    height:auto;
+  }
+  .cover-panel{
+    padding:20px 22px 24px;
+    background:#0A1420;
+  }
+  .cover-lede{
+    color:#C9D4E0;
+    font-size:15px;
+    line-height:1.55;
+    margin-bottom:16px;
+    text-align:center;
+  }
+  .cover-lede strong{color:#fff}
+  .cover-panel .btn-primary{margin-top:0}
   .gate-card{
     background:var(--card);
     border-radius:18px;
@@ -554,25 +584,43 @@
   </div>
 </div>
 
-<!-- ============ GATE DE CADASTRO + PESQUISA ============ -->
+<!-- ============ GATE — CAPA → E-MAIL → FORMULÁRIO → DIAGNÓSTICO ============ -->
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
-  <div class="gate-card">
 
-    <div id="gateForm">
-      <span class="eyebrow">Pesquisa Nacional · Execução 5.0</span>
-      <h2 id="gateTitle">Antes de começar, 30 segundos</h2>
-      <p class="gate-frame">Você está entrando na <strong>maior pesquisa de procrastinação do Brasil</strong>. O Christian já ouviu mais de 44 mil pessoas — agora é a sua vez. Leva 30 segundos, ajuda a melhorar o método, e no fim você recebe <strong>seu diagnóstico</strong>.</p>
+  <!-- PASSO 0: CAPA -->
+  <div class="gate-cover" id="gateCover">
+    <img src="capa.jpg" alt="Christian Barbosa — Procrastinação: Execução Imediata" class="cover-img">
+    <div class="cover-panel">
+      <p class="cover-lede">Seu <strong>Kit de Execução Imediata</strong> está a um passo. Antes de liberar, o Christian quer te conhecer melhor — leva menos de 1 minuto.</p>
+      <button type="button" class="btn-primary" id="btnCoverStart">Vamos começar →</button>
+    </div>
+  </div>
+
+  <div class="gate-card" id="gateCard" hidden>
+
+    <!-- PASSO 1: E-MAIL -->
+    <div id="gateEmail">
+      <span class="eyebrow">Execução 5.0 · Passo 1 de 2</span>
+      <h2 id="gateTitle">Qual é o seu e-mail?</h2>
+      <p class="gate-frame">É por ele que reconhecemos você. Se já respondeu antes, entra direto no kit.</p>
+      <div class="field" id="fEmail">
+        <label for="inEmail">Seu melhor e-mail <span class="req">*</span></label>
+        <input type="text" id="inEmail" autocomplete="email" inputmode="email" placeholder="voce@email.com">
+        <span class="field-err">Digite um e-mail válido.</span>
+      </div>
+      <button type="button" class="btn-primary" id="btnEmail">Continuar →</button>
+    </div>
+
+    <!-- PASSO 2: FORMULÁRIO (10 perguntas) -->
+    <div id="gateForm" hidden>
+      <span class="eyebrow">Execução 5.0 · Passo 2 de 2</span>
+      <h2>Me conta um pouco sobre você</h2>
+      <p class="gate-frame">Suas respostas ajudam o Christian a deixar o método cada vez mais afiado. Vai rápido.</p>
 
       <div class="field" id="fNome">
         <label for="inNome">Nome <span class="req">*</span></label>
         <input type="text" id="inNome" autocomplete="name" placeholder="Seu nome">
         <span class="field-err">Digite seu nome.</span>
-      </div>
-
-      <div class="field" id="fEmail">
-        <label for="inEmail">E-mail <span class="req">*</span></label>
-        <input type="text" id="inEmail" autocomplete="email" inputmode="email" placeholder="voce@email.com">
-        <span class="field-err">Digite um e-mail válido.</span>
       </div>
 
       <div class="field" id="fZap">
@@ -581,44 +629,77 @@
         <span class="field-err">Digite seu WhatsApp com DDD (mínimo 10 dígitos).</span>
       </div>
 
+      <!-- 1 -->
       <div class="field" id="fProf">
-        <label for="inProf">Profissão <span class="req">*</span></label>
+        <label for="inProf">1. Qual a sua ocupação hoje? <span class="req">*</span></label>
         <select id="inProf">
           <option value="">Selecione…</option>
-          <option>Analista/Técnico</option>
           <option>Empreendedor(a)</option>
+          <option>Analista/Técnico</option>
           <option>Gerente/Diretor(a)</option>
           <option>Profissional Liberal</option>
           <option>Profissional de RH</option>
           <option>CLT Operacional</option>
+          <option>CLT Coordenação</option>
           <option>Consultor(a)/Mentor(a)</option>
           <option>Estudante</option>
-          <option>CLT Coordenação</option>
           <option>Outro</option>
         </select>
-        <span class="field-err">Selecione sua profissão.</span>
+        <span class="field-err">Selecione uma opção.</span>
       </div>
 
+      <!-- 2 -->
+      <div class="field" id="fRenda">
+        <label for="inRenda">2. Qual a sua faixa de renda mensal? <span class="req">*</span></label>
+        <select id="inRenda">
+          <option value="">Selecione…</option>
+          <option>Até R$ 3 mil</option>
+          <option>R$ 3 a 6 mil</option>
+          <option>R$ 6 a 10 mil</option>
+          <option>R$ 10 a 20 mil</option>
+          <option>R$ 20 a 50 mil</option>
+          <option>Acima de R$ 50 mil</option>
+          <option>Prefiro não dizer</option>
+        </select>
+        <span class="field-err">Selecione uma opção.</span>
+      </div>
+
+      <!-- 3 -->
+      <div class="field" id="fIdade">
+        <label for="inIdade">3. Qual a sua idade? <span class="req">*</span></label>
+        <select id="inIdade">
+          <option value="">Selecione…</option>
+          <option>Até 24 anos</option>
+          <option>25 a 34 anos</option>
+          <option>35 a 44 anos</option>
+          <option>45 a 54 anos</option>
+          <option>55 anos ou mais</option>
+        </select>
+        <span class="field-err">Selecione uma opção.</span>
+      </div>
+
+      <!-- 4 -->
       <div class="field" id="fProcr">
-        <label for="inProcr">O que você mais procrastina hoje? <span class="req">*</span></label>
+        <label for="inProcr">4. O que você mais procrastina hoje? <span class="req">*</span></label>
         <select id="inProcr">
           <option value="">Selecione…</option>
           <option>Academia/exercício</option>
           <option>Leitura</option>
           <option>Saúde/exames</option>
-          <option>Mudanças pessoais</option>
           <option>Planejamento financeiro</option>
           <option>Idiomas</option>
           <option>Cursos/estudos</option>
           <option>Tarefas do trabalho</option>
+          <option>Mudanças pessoais</option>
           <option>Relacionamentos</option>
           <option>Outro</option>
         </select>
         <span class="field-err">Selecione uma opção.</span>
       </div>
 
+      <!-- 5 -->
       <div class="field" id="fMotivo">
-        <label for="inMotivo">Por que você acha que não faz? <span class="req">*</span></label>
+        <label for="inMotivo">5. Por que você acha que não faz? <span class="req">*</span></label>
         <select id="inMotivo">
           <option value="">Selecione…</option>
           <option data-tip="foco">Perco o foco nas redes</option>
@@ -634,17 +715,66 @@
         <span class="field-err">Selecione uma opção.</span>
       </div>
 
+      <!-- 6 -->
+      <div class="field" id="fTempo">
+        <label for="inTempo">6. Há quanto tempo a procrastinação te acompanha? <span class="req">*</span></label>
+        <select id="inTempo">
+          <option value="">Selecione…</option>
+          <option>Menos de 1 ano</option>
+          <option>1 a 3 anos</option>
+          <option>3 a 10 anos</option>
+          <option>A vida toda</option>
+        </select>
+        <span class="field-err">Selecione uma opção.</span>
+      </div>
+
+      <!-- 7 -->
+      <div class="field" id="fCusto">
+        <label for="inCusto">7. Onde a procrastinação mais está te custando caro? <span class="req">*</span></label>
+        <select id="inCusto">
+          <option value="">Selecione…</option>
+          <option>Carreira e dinheiro</option>
+          <option>Saúde</option>
+          <option>Relacionamentos</option>
+          <option>Projetos pessoais</option>
+          <option>Autoestima e paz mental</option>
+        </select>
+        <span class="field-err">Selecione uma opção.</span>
+      </div>
+
+      <!-- 8 (aberta) -->
+      <div class="field" id="fDecisao">
+        <label for="inDecisao">8. O que te fez tomar a decisão de entrar no Execução 5.0? <span class="req">*</span></label>
+        <textarea id="inDecisao" rows="2" placeholder="Escreva com suas palavras…"></textarea>
+        <span class="field-err">Conte pra gente, mesmo que em poucas palavras.</span>
+      </div>
+
+      <!-- 9 (aberta) -->
+      <div class="field" id="fTentativas">
+        <label for="inTentativas">9. O que você já tentou para vencer a procrastinação e não funcionou? <span class="req">*</span></label>
+        <textarea id="inTentativas" rows="2" placeholder="Apps, agendas, cursos, força de vontade…"></textarea>
+        <span class="field-err">Conte pra gente, mesmo que em poucas palavras.</span>
+      </div>
+
+      <!-- 10 (aberta) -->
+      <div class="field" id="fDesejo">
+        <label for="inDesejo">10. Se vencesse a procrastinação de vez, o que mudaria na sua vida nos próximos 12 meses? <span class="req">*</span></label>
+        <textarea id="inDesejo" rows="2" placeholder="Descreva a vida que você quer…"></textarea>
+        <span class="field-err">Conte pra gente, mesmo que em poucas palavras.</span>
+      </div>
+
       <div class="field" id="fConsent" style="margin-top:6px">
         <label class="consent" for="inConsent">
           <input type="checkbox" id="inConsent">
-          <span>Autorizo o uso das minhas respostas, de forma anônima, para pesquisa e melhoria do método Execução 5.0. <span class="req">*</span></span>
+          <span>Autorizo o uso das minhas respostas para pesquisa e melhoria do método Execução 5.0. <span class="req">*</span></span>
         </label>
-        <span class="field-err">É preciso autorizar para participar da pesquisa.</span>
+        <span class="field-err">É preciso autorizar para continuar.</span>
       </div>
 
       <button type="button" class="btn-primary" id="btnGate">Receber meu diagnóstico →</button>
     </div>
 
+    <!-- DIAGNÓSTICO -->
     <div class="diag" id="gateDiag" hidden>
       <span class="diag-badge">Seu diagnóstico</span>
       <h2 id="diagTitle">Pronto.</h2>
@@ -1051,6 +1181,29 @@ Se ao final ficar claro que ela não é importante de verdade, me dê os motivos
     }catch(e){ if(cb){cb(null);} }
   }
 
+  // Checa se o e-mail já está na base via função segura (security definer).
+  // Ela só devolve true/false — não expõe nenhum dado de ninguém.
+  // cb(existe) onde existe é true/false; em qualquer falha, cb(false)
+  // para não travar quem está entrando pela primeira vez.
+  function sbEmailExiste(email, cb){
+    if(!supabaseAtivo){ cb(false); return; }
+    try{
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', SUPABASE_URL + '/rest/v1/rpc/email_existe', true);
+      xhr.setRequestHeader('apikey', SUPABASE_ANON);
+      xhr.setRequestHeader('Authorization', 'Bearer ' + SUPABASE_ANON);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.onreadystatechange = function(){
+        if(xhr.readyState === 4){
+          if(xhr.status >= 200 && xhr.status < 300){
+            cb(String(xhr.responseText).replace(/\s/g,'') === 'true');
+          } else { cb(false); }
+        }
+      };
+      xhr.send(JSON.stringify({ p_email: email }));
+    }catch(e){ cb(false); }
+  }
+
   // Gera o UUID no navegador: a tabela não tem política de SELECT
   // (privacidade dos alunos), então o id não pode ser lido de volta.
   function gerarUUID(){
@@ -1396,32 +1549,100 @@ Se ao final ficar claro que ela não é importante de verdade, me dê os motivos
 
   (function initGate(){
     var gate = $('gate');
+
+    // Já concluiu neste navegador → entra direto no kit, nem mostra a capa.
     if(storeGet(K('gate_done')) === '1'){
       gate.hidden = true;
       return;
     }
     document.body.style.overflow = 'hidden';
 
-    on($('btnGate'),'click',function(){
-      var nome = $('inNome').value.replace(/^\s+|\s+$/g,'');
+    function entrarNoKit(){
+      gate.hidden = true;
+      document.body.style.overflow = '';
+    }
+
+    function mostrar(qualId){
+      $('gateEmail').hidden = (qualId !== 'gateEmail');
+      $('gateForm').hidden  = (qualId !== 'gateForm');
+      $('gateDiag').hidden  = (qualId !== 'gateDiag');
+      gate.scrollTop = 0;
+    }
+
+    // ---- PASSO 0: capa → abre o passo do e-mail ----
+    on($('btnCoverStart'),'click',function(){
+      $('gateCover').hidden = true;
+      $('gateCard').hidden = false;
+      mostrar('gateEmail');
+      $('inEmail').focus();
+    });
+
+    // ---- PASSO 1: e-mail → checa se já existe ----
+    function submeterEmail(){
       var email = $('inEmail').value.replace(/^\s+|\s+$/g,'');
+      var valido = validaEmail(email);
+      markInvalid('fEmail', !valido);
+      if(!valido){ $('inEmail').focus(); return; }
+
+      var btn = $('btnEmail');
+      btn.disabled = true;
+      btn.textContent = 'Verificando…';
+
+      sbEmailExiste(email, function(existe){
+        btn.disabled = false;
+        btn.textContent = 'Continuar →';
+        if(existe){
+          // já está na base → entra direto no entregável
+          storeSet(K('gate_done'), '1');
+          storeSet(K('email'), email);
+          entrarNoKit();
+        } else {
+          storeSet(K('email'), email);
+          mostrar('gateForm');
+          $('inNome').focus();
+        }
+      });
+    }
+    on($('btnEmail'),'click',submeterEmail);
+    on($('inEmail'),'keydown',function(ev){
+      if(ev.key === 'Enter' || ev.keyCode === 13){ ev.preventDefault(); submeterEmail(); }
+    });
+
+    // ---- PASSO 2: formulário completo ----
+    on($('btnGate'),'click',function(){
+      var email = storeGet(K('email')) || $('inEmail').value.replace(/^\s+|\s+$/g,'');
+      var nome = $('inNome').value.replace(/^\s+|\s+$/g,'');
       var zap = $('inZap').value.replace(/^\s+|\s+$/g,'');
       var prof = $('inProf').value;
+      var renda = $('inRenda').value;
+      var idade = $('inIdade').value;
       var procr = $('inProcr').value;
       var motivoSel = $('inMotivo');
       var motivo = motivoSel.value;
+      var tempo = $('inTempo').value;
+      var custo = $('inCusto').value;
+      var decisao = $('inDecisao').value.replace(/^\s+|\s+$/g,'');
+      var tentativas = $('inTentativas').value.replace(/^\s+|\s+$/g,'');
+      var desejo = $('inDesejo').value.replace(/^\s+|\s+$/g,'');
       var consent = $('inConsent').checked;
 
       var ok = true;
-      markInvalid('fNome', nome.length < 2); if(nome.length < 2){ ok = false; }
-      markInvalid('fEmail', !validaEmail(email)); if(!validaEmail(email)){ ok = false; }
-      markInvalid('fZap', !validaZap(zap)); if(!validaZap(zap)){ ok = false; }
-      markInvalid('fProf', !prof); if(!prof){ ok = false; }
-      markInvalid('fProcr', !procr); if(!procr){ ok = false; }
-      markInvalid('fMotivo', !motivo); if(!motivo){ ok = false; }
-      markInvalid('fConsent', !consent); if(!consent){ ok = false; }
+      function req(fieldId, cond){ markInvalid(fieldId, cond); if(cond){ ok = false; } }
+      req('fNome', nome.length < 2);
+      req('fZap', !validaZap(zap));
+      req('fProf', !prof);
+      req('fRenda', !renda);
+      req('fIdade', !idade);
+      req('fProcr', !procr);
+      req('fMotivo', !motivo);
+      req('fTempo', !tempo);
+      req('fCusto', !custo);
+      req('fDecisao', decisao.length < 2);
+      req('fTentativas', tentativas.length < 2);
+      req('fDesejo', desejo.length < 2);
+      req('fConsent', !consent);
       if(!ok){
-        var firstInvalid = document.querySelector('.gate .field.invalid input, .gate .field.invalid select');
+        var firstInvalid = document.querySelector('.gate .field.invalid input, .gate .field.invalid select, .gate .field.invalid textarea');
         if(firstInvalid){ firstInvalid.focus(); }
         return;
       }
@@ -1438,8 +1659,15 @@ Se ao final ficar claro que ela não é importante de verdade, me dê os motivos
         email: email,
         whatsapp: zap,
         profissao: prof,
+        renda: renda,
+        idade: idade,
         mais_procrastina: procr,
         motivo: motivo,
+        tempo_procrastinacao: tempo,
+        custo_procrastinacao: custo,
+        decisao_entrada: decisao,
+        tentativas_anteriores: tentativas,
+        desejo_12m: desejo,
         tag: TAG_BONUS,
         progresso_48h: 0,
         tarefa_clarificada: '',
@@ -1449,18 +1677,12 @@ Se ao final ficar claro que ela não é importante de verdade, me dê os motivos
         var d = montarDiagnostico(tip, procr);
         $('diagTitle').textContent = d.titulo;
         $('diagText').innerHTML = d.html;
-        $('gateForm').style.display = 'none';
-        var diag = $('gateDiag');
-        diag.hidden = false;
-        gate.scrollTop = 0;
+        mostrar('gateDiag');
         $('btnStart').focus();
       });
     });
 
-    on($('btnStart'),'click',function(){
-      gate.hidden = true;
-      document.body.style.overflow = '';
-    });
+    on($('btnStart'),'click',entrarNoKit);
   })();
 
 })();

@@ -25,6 +25,14 @@ create table if not exists public.alunos_execucao5 (
   profissao          text,
   mais_procrastina   text,
   motivo             text,
+  -- ICP: demografia + perguntas abertas da pesquisa de onboarding
+  renda                 text,
+  idade                 text,
+  tempo_procrastinacao  text,
+  custo_procrastinacao  text,
+  decisao_entrada       text,   -- aberta: o que fez decidir entrar
+  tentativas_anteriores text,   -- aberta: o que já tentou e não funcionou
+  desejo_12m            text,   -- aberta: o que mudaria em 12 meses
   -- tag de participação: todo cadastro deste kit entra como 'bonus1_kit_execucao'
   tag                text not null default 'bonus1_kit_execucao',
   progresso_48h      int not null default 0,
@@ -57,6 +65,21 @@ create policy "update_progresso"
 --    Por isso o HTML gera o uuid no navegador e insere com
 --    "Prefer: return=minimal".
 --
+-- 5b) Função segura de checagem de e-mail (para o fluxo "já está na base?").
+--     security definer: roda com dono da função e ignora RLS, mas SÓ devolve
+--     true/false — nunca expõe dados de ninguém. anon pode executar.
+create or replace function public.email_existe(p_email text)
+returns boolean
+language sql stable security definer set search_path = public
+as $$
+  select exists(
+    select 1 from public.alunos_execucao5
+    where lower(email) = lower(trim(p_email))
+  )
+$$;
+revoke all on function public.email_existe(text) from public;
+grant execute on function public.email_existe(text) to anon;
+
 -- 6) NÃO criar política de SELECT.
 --    Sem ela, a chave anon não lê nada — nem via REST, nem via JS.
 --    (A service_role, usada só em ambiente privado, ignora RLS e lê tudo.)
