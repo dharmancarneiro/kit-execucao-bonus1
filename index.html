@@ -490,9 +490,38 @@
     background:var(--green-soft);
     border-left:4px solid var(--green);
     border-radius:10px;
-    padding:14px 16px;
+    padding:16px 18px;
   }
   .diag .diag-text strong{color:var(--ink)}
+  .diag .diag-plano-titulo{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--green-deep);
+    margin-top:14px;
+  }
+  .diag ol.diag-passos{
+    margin:8px 0 0 20px;
+    padding:0;
+  }
+  .diag ol.diag-passos li{
+    margin-top:8px;
+    padding-left:4px;
+  }
+  .diag ol.diag-passos li::marker{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:600;
+    color:var(--green-deep);
+  }
+  .diag .diag-fecho{
+    margin-top:14px;
+    padding-top:12px;
+    border-top:1px dashed var(--green);
+    font-style:italic;
+    color:var(--ink);
+  }
 
   /* motion */
   @media (prefers-reduced-motion:reduce){
@@ -1237,44 +1266,115 @@ Se ao final ficar claro que ela não é importante de verdade, me dê os motivos
   /* =====================================================
      GATE — cadastro + pesquisa + diagnóstico
   ===================================================== */
+  /* Cada diagnóstico tem: o mecanismo (por que você trava), um plano
+     de 3 passos ligado ao kit, e um fecho. {P} vira o que a pessoa
+     respondeu que mais procrastina. */
   var DIAGNOSTICOS = {
     foco: {
-      titulo: 'Seu bloqueio: dispersão',
-      texto: '<strong>Você não tem um problema de preguiça — tem um problema de foco fatiado.</strong> A saída é encolher o passo: quebre a tarefa em micro-passos de 5 minutos (rode o <strong>Prompt 2</strong>), deixe o celular em outro cômodo e execute só o primeiro passo. Cinco minutos focados valem mais que uma hora picada.'
+      titulo: 'Seu bloqueio: atenção fatiada',
+      mecanismo: 'Isso não é falta de força de vontade — é treino. Seu cérebro é interrompido o dia inteiro por notificação, e cada vez que você sai de {P} e volta, perde até 20 minutos de concentração. Você não está parado: está recomeçando o tempo todo. Por isso trabalha muito e conclui pouco.',
+      passos: [
+        'Celular em outro cômodo (não é no silencioso — é longe do braço) pelos próximos 20 minutos.',
+        'Rode o <strong>Prompt 2</strong> na Inteligência Artificial: ele quebra {P} em micro-passos de 5 minutos.',
+        'Execute só o primeiro micro-passo, com cronômetro. Terminou? Marque o bloco no Mapa de 48 Horas.'
+      ],
+      fecho: 'Foco não é dom, é ambiente. Monte o ambiente e o foco aparece.'
     },
     energia: {
-      titulo: 'Seu bloqueio: energia',
-      texto: '<strong>Tarefa pesada em hora errada não anda.</strong> Faça o primeiro micro-passo no seu melhor horário do dia — e que ele tenha só 5 minutos (rode o <strong>Prompt 2</strong>). Energia baixa pede passo pequeno, não força de vontade.'
+      titulo: 'Seu bloqueio: energia na hora errada',
+      mecanismo: 'Sua energia não é constante ao longo do dia — e você provavelmente está tentando encarar {P} justamente quando a bateria está no fim. Tarefa difícil em horário de energia baixa não anda, e aí parece que o problema é você. Não é: é a agenda brigando com a sua biologia.',
+      passos: [
+        'Identifique seu melhor horário do dia (pra maioria das pessoas, é a primeira hora da manhã).',
+        'Reserve o primeiro bloco de 20 minutos desse horário só pra {P} — antes de abrir e-mail e WhatsApp.',
+        'Rode o <strong>Prompt 2</strong> e comece pelo passo de 5 minutos. Pequeno de propósito: energia baixa pede passo pequeno.'
+      ],
+      fecho: 'Energia segue a ação, não o contrário. Começar pequeno gera a disposição que você estava esperando aparecer.'
     },
     preguica: {
-      titulo: 'Seu bloqueio: começar',
-      texto: '<strong>O que parece preguiça quase sempre é uma tarefa grande demais.</strong> Ninguém tem preguiça de um passo de 5 minutos. Rode o <strong>Prompt 2</strong>, pegue só o primeiro micro-passo e faça agora. O resto vem atrás.'
+      titulo: 'Seu bloqueio: tarefa grande demais',
+      mecanismo: 'O que você chama de preguiça quase nunca é preguiça. É o seu cérebro fugindo de um esforço vago e sem tamanho: {P} está grande demais e sem um primeiro passo claro. Ninguém tem preguiça de um passo de 5 minutos — as pessoas têm preguiça de montanhas sem trilha.',
+      passos: [
+        'Preencha o <strong>Template 1</strong>: transforme {P} numa frase específica (o quê + até quando).',
+        'Rode o <strong>Prompt 2</strong>: ele quebra a tarefa em passos de no máximo 5 minutos.',
+        'Faça SÓ o primeiro passo, agora. Não olhe pros outros. Um passo puxa o outro.'
+      ],
+      fecho: 'Você não precisa de mais disciplina. Precisa de um passo pequeno o bastante pra não ter como fugir dele.'
     },
     multi: {
-      titulo: 'Seu bloqueio: excesso',
-      texto: '<strong>Quem tenta fazer tudo não termina nada.</strong> Escolha UMA tarefa — a que mais te incomoda — e feche o resto. O Mapa de 48 Horas foi feito exatamente pra isso: uma tarefa, blocos curtos, um passo de cada vez.'
+      titulo: 'Seu bloqueio: frentes demais abertas',
+      mecanismo: 'Multitarefa é uma mentira cara: o cérebro não faz duas coisas ao mesmo tempo, ele alterna — e cada troca de contexto queima tempo e atenção. "Falta de tempo", na maioria dos casos, é excesso de frentes abertas. É por isso que você vive ocupado e {P} continua parado.',
+      passos: [
+        'Escolha UMA tarefa — a que mais te incomoda ({P}) — e declare as outras em pausa por 48 horas.',
+        'Feche as abas, silencie os grupos e avise quem precisar: você tem 20 minutos indisponíveis.',
+        'Siga o Mapa de 48 Horas à risca: blocos de 20 minutos, nada além. O <strong>Prompt 2</strong> te dá os micro-passos.'
+      ],
+      fecho: 'Você não precisa de mais horas no dia. Precisa de menos frentes na mesma hora.'
     },
     info: {
       titulo: 'Seu bloqueio: preparação infinita',
-      texto: '<strong>Buscar mais informação é a procrastinação mais disfarçada que existe.</strong> Você já sabe o suficiente pra dar o primeiro passo de 5 minutos. Rode o <strong>Prompt 2</strong> e comece pelo passo 1 — aprende-se fazendo, não pesquisando.'
+      mecanismo: 'Buscar mais informação é a procrastinação mais elegante que existe: parece produtividade, dá sensação de progresso — mas é medo de começar usando crachá de estudo. Você já sabe o suficiente pra dar o primeiro passo de {P}. O que falta não é conteúdo, é contato com a realidade.',
+      passos: [
+        'Proíba pesquisa nova sobre {P} pelas próximas 48 horas. Nada de mais um vídeo, mais um artigo.',
+        'Rode o <strong>Prompt 2</strong> com o que você JÁ sabe e pegue os 3 primeiros micro-passos.',
+        'Execute o passo 1 e anote as dúvidas que surgirem — só pesquise o que de fato travar a execução.'
+      ],
+      fecho: 'Clareza não vem de estudar mais. Vem de começar e corrigir no caminho.'
     },
     urgencia: {
-      titulo: 'Seu bloqueio: só apagar incêndio',
-      texto: '<strong>Viver de urgência é deixar os outros decidirem seu dia.</strong> Reserve o primeiro bloco de 20 minutos do dia pra sua tarefa importante — antes das urgências chegarem. Use o <strong>Prompt 5</strong> pra separar o que é importante do que só grita mais alto.'
+      titulo: 'Seu bloqueio: refém do urgente',
+      mecanismo: 'Viver apagando incêndio é deixar a agenda dos outros mandar no seu dia. O urgente grita, o importante sussurra — e {P} vai ficando pra depois até virar incêndio também. O problema não é o volume de urgências: é que o importante nunca tem horário marcado.',
+      passos: [
+        'Amanhã, reserve o primeiro bloco de 20 minutos do dia só pra {P} — antes de abrir e-mail e WhatsApp. O importante vem antes, não na sobra.',
+        'Rode o <strong>Prompt 5</strong>: ele separa o que é importante de verdade do que só grita mais alto.',
+        'Repita depois de amanhã. Importante se faz por agendamento, nunca por sobra de tempo.'
+      ],
+      fecho: 'Quem não agenda o que é importante vive refém do que é urgente.'
     },
     importancia: {
-      titulo: 'Seu bloqueio: falta de motivo',
-      texto: '<strong>Sem conexão com um motivo real, toda tarefa pesa o dobro.</strong> Preencha o <strong>Template 3</strong> ("isso é importante porque…") e rode o <strong>Prompt 5</strong>. Se a tarefa não for importante de verdade, cancele ou delegue sem culpa. Se for, agora você sabe por quê.'
+      titulo: 'Seu bloqueio: tarefa sem motivo',
+      mecanismo: 'Nenhuma técnica do mundo sustenta uma tarefa sem motivo. Se {P} não se conecta com nada que importa de verdade pra você, seu cérebro está certo em resistir — ele só não quer gastar energia com o que parece vazio. A questão não é "como me forçar", é "por que isso existe na minha lista".',
+      passos: [
+        'Preencha o <strong>Template 3</strong>: complete "isso é importante porque…" e "quando eu terminar, eu ganho…".',
+        'Rode o <strong>Prompt 5</strong> e interrogue a tarefa sem dó: o que acontece se você nunca fizer?',
+        'Decida: ou {P} ganha um motivo real e entra no Mapa de 48 Horas, ou você cancela/delega sem culpa — e libera essa energia.'
+      ],
+      fecho: 'Fazer rápido o que não precisava ser feito continua sendo desperdício. Motivo primeiro, execução depois.'
     },
     medo: {
       titulo: 'Seu bloqueio: medo escondido',
-      texto: '<strong>Você não está adiando a tarefa — está adiando o que ela pode gerar.</strong> Rode o <strong>Prompt 3</strong> agora: ele expõe os medos escondidos e devolve uma ação concreta pra cada um. Medo nomeado encolhe.'
+      mecanismo: 'Você não está adiando {P} — está adiando o que essa tarefa pode gerar: um julgamento, um erro, uma resposta que você não quer ouvir. O medo trabalha no escuro: enquanto for uma sensação vaga, ele manda em você. Nomeado e olhado de frente, ele encolhe.',
+      passos: [
+        'Rode o <strong>Prompt 3</strong> agora: ele lista os medos escondidos atrás de {P}, um por um.',
+        'Pra cada medo, defina uma ação concreta de 5 minutos — hoje ainda. Ação pequena desmonta medo grande.',
+        'Preencha o <strong>Template 3</strong> pra lembrar o que existe do outro lado desse medo.'
+      ],
+      fecho: 'Coragem não é ausência de medo. É medo com um passo marcado no calendário.'
     },
     outro: {
-      titulo: 'Seu diagnóstico começa agora',
-      texto: '<strong>Cada trava tem uma causa — e a sua merece um diagnóstico sob medida.</strong> Comece pelo <strong>Prompt 1</strong>: ele faz as perguntas certas, uma de cada vez, e te diz qual é o seu bloqueio principal e o primeiro passo pra destravar.'
+      titulo: 'Sua trava merece diagnóstico próprio',
+      mecanismo: 'Toda procrastinação tem uma causa: falta de clareza, medo, ausência de recompensa, tarefa grande demais ou falta de motivo. Chutar a causa errada é tomar o remédio errado — você se esforça e {P} continua no mesmo lugar. Antes de técnica, você precisa de diagnóstico.',
+      passos: [
+        'Rode o <strong>Prompt 1</strong>: ele faz perguntas objetivas, uma de cada vez, e identifica seu bloqueio principal.',
+        'Com a causa na mão, use a arma certa: medo → Prompt 3 · sem recompensa → Prompt 4 · sem importância → Prompt 5.',
+        'Feche o dia com o primeiro micro-passo feito — o diagnóstico só vale se virar movimento.'
+      ],
+      fecho: 'Diagnóstico certo, execução destravada. Comece pela pergunta, não pela força.'
     }
   };
+
+  function montarDiagnostico(tip, procr){
+    var d = DIAGNOSTICOS[tip] || DIAGNOSTICOS.outro;
+    var alvo = (procr && procr !== 'Outro')
+      ? '<strong>' + procr + '</strong>'
+      : '<strong>a tarefa que você vem adiando</strong>';
+    function sub(s){ return s.replace(/\{P\}/g, alvo); }
+    var html = '<p>' + sub(d.mecanismo) + '</p>';
+    html += '<p class="diag-plano-titulo">Seu plano pros próximos 20 minutos:</p><ol class="diag-passos">';
+    var i;
+    for(i=0;i<d.passos.length;i++){ html += '<li>' + sub(d.passos[i]) + '</li>'; }
+    html += '</ol><p class="diag-fecho">' + sub(d.fecho) + '</p>';
+    return { titulo: d.titulo, html: html };
+  }
 
   function markInvalid(fieldId, invalid){
     var f = $(fieldId);
@@ -1346,9 +1446,9 @@ Se ao final ficar claro que ela não é importante de verdade, me dê os motivos
         consentimento: true
       }, function(){
         storeSet(K('gate_done'), '1');
-        var d = DIAGNOSTICOS[tip] || DIAGNOSTICOS.outro;
+        var d = montarDiagnostico(tip, procr);
         $('diagTitle').textContent = d.titulo;
-        $('diagText').innerHTML = d.texto;
+        $('diagText').innerHTML = d.html;
         $('gateForm').style.display = 'none';
         var diag = $('gateDiag');
         diag.hidden = false;
