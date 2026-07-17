@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Protocolo Anti-Autossabotagem · Bônus 2 · Execução 5.0</title>
+<meta name="description" content="Protocolo Anti-Autossabotagem — Bônus 2 do Execução 5.0, com Christian Barbosa. O que fazer nos 60 segundos em que sua cabeça trava.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ECEAE3;
+    --card:#FBFAF7;
+    --ink:#16212E;
+    --ink-2:#1E2C3B;
+    --ink-soft:#4A5563;
+    --line:#DAD7CD;
+    --green:#0F8768;
+    --green-deep:#0B6B52;
+    --green-soft:#E4F0EC;
+    --red:#C0392B;
+    --red-deep:#9C2C20;
+    --red-soft:#F8E7E4;
+    /* cantos mais retos que o Bônus 1 — linguagem "tática" */
+    --r:10px;
+    --r-sm:7px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',system-ui,-apple-system,sans-serif;
+    font-size:16px;
+    line-height:1.55;
+  }
+  ::selection{background:var(--red-soft);color:var(--red-deep)}
+  a{color:var(--green-deep)}
+  button{font-family:inherit;cursor:pointer}
+  input,select,textarea{font-family:inherit;font-size:16px;color:var(--ink)}
+
+  a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,
+  .cross:focus-visible{outline:3px solid var(--red);outline-offset:2px;border-radius:4px}
+
+  .mono{font-family:'JetBrains Mono',monospace}
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;
+    color:var(--red-deep);
+  }
+
+  .wrap{max-width:880px;margin:0 auto;padding:0 20px}
+  section{padding:40px 0}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-spacing:-.02em;line-height:1.12}
+
+  /* rótulo de seção estilo terminal: // 03 · TÍTULO */
+  .sec-tag{
+    font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);
+    margin-bottom:6px;
+  }
+  .sec-tag b{color:var(--red-deep)}
+  h2{font-size:clamp(23px,4.5vw,31px)}
+  .section-sub{color:var(--ink-soft);margin-top:8px;max-width:60ch}
+  .section-head{margin-bottom:22px}
+
+  /* ---------- HERO — console escuro ---------- */
+  .hero{
+    background:var(--ink);
+    color:#EAF0F5;
+    border-bottom:3px solid var(--red);
+  }
+  .hero-inner{max-width:880px;margin:0 auto;padding:52px 20px 44px}
+  .hero .eyebrow{color:#F1897E}
+  .hero h1{
+    font-size:clamp(30px,6.4vw,52px);font-weight:700;margin-top:12px;color:#fff;
+  }
+  .hero .lede{color:#B7C2CE;font-size:clamp(16px,2.5vw,19px);margin-top:16px;max-width:60ch}
+  .hero .lede strong{color:#fff}
+  .hero-sign{
+    margin-top:24px;padding:15px 18px;
+    background:var(--ink-2);border-left:3px solid var(--red);border-radius:var(--r-sm);max-width:600px;
+  }
+  .hero-sign p{font-size:15px;color:#C7D1DB;font-style:italic}
+  .hero-sign .who{font-family:'JetBrains Mono',monospace;font-size:12px;font-style:normal;color:#fff;font-weight:600;margin-top:8px}
+
+  /* ---------- como usar ---------- */
+  .howto-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .howto-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px;border-top:3px solid var(--ink)}
+  .howto-num{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:var(--ink-soft)}
+  .howto-card h3{font-size:16px;margin:8px 0 6px}
+  .howto-card p{font-size:14px;color:var(--ink-soft)}
+
+  /* ---------- mapa de autossabotagem ---------- */
+  .mapa-box{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:8px 18px 18px}
+  .mapa-item{
+    display:flex;gap:12px;align-items:flex-start;
+    padding:13px 4px;border-bottom:1px dashed var(--line);cursor:pointer;
+  }
+  .mapa-item:last-of-type{border-bottom:0}
+  .cross{
+    flex:none;width:26px;height:26px;margin-top:1px;
+    border:2px solid var(--ink-soft);border-radius:var(--r-sm);background:#fff;position:relative;
+    -webkit-appearance:none;appearance:none;padding:0;
+  }
+  .mapa-item.on .cross{background:var(--red);border-color:var(--red)}
+  .mapa-item.on .cross:after{
+    content:"";position:absolute;left:7px;top:3px;width:6px;height:11px;
+    border:solid #fff;border-width:0 3px 3px 0;transform:rotate(45deg);
+  }
+  .mapa-item .m-txt strong{display:block;font-size:15px}
+  .mapa-item .m-txt span{font-size:13px;color:var(--ink-soft)}
+  .mapa-resumo{
+    margin-top:14px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;
+    color:var(--ink);background:var(--red-soft);border-radius:var(--r-sm);padding:11px 14px;
+  }
+
+  /* ---------- protocolos ---------- */
+  .proto{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+    padding:0;margin-top:14px;overflow:hidden;scroll-margin-top:80px;
+  }
+  .proto-head{display:flex;align-items:center;gap:12px;padding:16px 18px 12px}
+  .proto-num{
+    font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;
+    color:#fff;background:var(--ink);border-radius:var(--r-sm);padding:4px 9px;flex:none;
+  }
+  .proto-head h3{font-size:18px}
+  .te-pega{
+    display:none;margin-left:auto;flex:none;
+    font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.08em;
+    color:#fff;background:var(--red);border-radius:99px;padding:4px 10px;
+  }
+  .proto.pega .te-pega{display:inline-block}
+  .proto.pega{border-color:var(--red)}
+  .proto-body{padding:0 18px 18px}
+  .p-row{margin-top:12px}
+  .p-label{
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.08em;
+    text-transform:uppercase;margin-bottom:4px;
+  }
+  .p-gatilho .p-label{color:var(--red-deep)}
+  .p-gatilho{background:var(--red-soft);border-radius:var(--r-sm);padding:11px 13px}
+  .p-gatilho p{font-size:14px;color:var(--ink)}
+  .p-mente .p-label{color:var(--ink-soft)}
+  .p-mente p{font-size:14px;color:var(--ink-soft)}
+  .p-60{background:var(--green-soft);border:1px solid #CFE6DD;border-radius:var(--r-sm);padding:12px 13px}
+  .p-60 .p-label{color:var(--green-deep);display:flex;align-items:center;gap:6px}
+  .p-60 p{font-size:15px;color:var(--ink);font-weight:500}
+  .p-persist{font-size:13px;color:var(--ink-soft);border-top:1px dashed var(--line);padding-top:11px}
+  .p-persist b{color:var(--ink)}
+  .p-persist .jump{
+    background:none;border:0;color:var(--red-deep);font-weight:600;font-size:13px;
+    text-decoration:underline;padding:0;cursor:pointer;
+  }
+  .flash{animation:flash 1.1s ease}
+  @keyframes flash{0%{box-shadow:0 0 0 0 rgba(192,57,43,.55)}100%{box-shadow:0 0 0 14px rgba(192,57,43,0)}}
+
+  /* ---------- prompts ---------- */
+  .prompt{background:var(--ink);color:#E9EDF2;border-radius:var(--r);padding:20px;margin-top:14px;scroll-margin-top:80px}
+  .prompt h3{font-size:16px;color:#fff;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .prompt-num{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:#F1897E;background:rgba(192,57,43,.25);border-radius:var(--r-sm);padding:3px 8px}
+  .prompt-when{font-size:13px;color:#A9B4C0;margin-top:6px}
+  .prompt-body{
+    font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.6;
+    background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:var(--r-sm);
+    padding:15px;margin-top:13px;white-space:pre-wrap;word-break:break-word;
+  }
+  .prompt-body .ph{color:#0F8768;background:var(--green-soft);border-radius:3px;padding:0 5px;font-weight:600}
+  .btn-copy{
+    margin-top:13px;background:var(--green);color:#fff;border:0;border-radius:var(--r-sm);
+    font-size:14px;font-weight:600;padding:11px 20px;min-height:44px;transition:background .2s ease;
+  }
+  .btn-copy:hover{background:var(--green-deep)}
+  .btn-copy.copied{background:var(--green-deep)}
+
+  /* ---------- diário ---------- */
+  .diario-box{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+  .field{margin-top:12px}
+  .field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
+  .field select,.field input[type=text],.field textarea{
+    width:100%;border:1px solid var(--line);border-radius:var(--r-sm);background:#fff;padding:11px 13px;color:var(--ink);
+  }
+  .field textarea{min-height:56px;resize:vertical}
+  .btn-dark{
+    margin-top:14px;background:var(--ink);color:#fff;border:0;border-radius:var(--r-sm);
+    font-size:14px;font-weight:600;padding:11px 20px;min-height:44px;
+  }
+  .btn-dark:hover{background:var(--ink-2)}
+  .diario-dominante{
+    display:none;margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;
+    color:var(--red-deep);background:var(--red-soft);border-radius:var(--r-sm);padding:11px 14px;
+  }
+  .diario-dominante.show{display:block}
+  .rec-list{margin-top:16px;display:flex;flex-direction:column;gap:8px}
+  .rec-item{background:var(--bg);border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 12px}
+  .rec-item .rec-top{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+  .rec-item .rec-pat{font-weight:600;font-size:14px}
+  .rec-item .rec-when{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-soft);white-space:nowrap}
+  .rec-item .rec-nota{font-size:13px;color:var(--ink-soft);margin-top:3px}
+  .rec-empty{font-size:13px;color:var(--ink-soft);margin-top:14px}
+  .btn-ghost{margin-top:14px;background:transparent;border:1px solid var(--line);color:var(--ink);border-radius:var(--r-sm);font-size:13px;font-weight:600;padding:9px 16px;min-height:40px}
+  .btn-ghost:hover{border-color:var(--ink-soft)}
+
+  /* ---------- fecho ---------- */
+  .footer{border-top:1px solid var(--line);padding:34px 0 90px;text-align:center}
+  .footer .end-line{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px}
+  .footer .mono{font-size:12px;color:var(--ink-soft);letter-spacing:.1em;text-transform:uppercase;margin-top:10px;display:block}
+
+  /* ---------- botão flutuante de emergência ---------- */
+  .sos-btn{
+    position:fixed;right:16px;bottom:16px;z-index:80;
+    background:var(--red);color:#fff;border:0;border-radius:99px;
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15px;
+    padding:14px 22px;min-height:52px;
+    box-shadow:0 10px 28px rgba(192,57,43,.45);
+    display:none;align-items:center;gap:9px;
+    animation:pulse 2.4s ease-in-out infinite;
+  }
+  .sos-btn.on{display:inline-flex}
+  .sos-btn .dot{width:9px;height:9px;border-radius:50%;background:#fff;flex:none}
+  @keyframes pulse{0%,100%{box-shadow:0 10px 28px rgba(192,57,43,.4)}50%{box-shadow:0 10px 34px rgba(192,57,43,.7)}}
+
+  /* seletor de emergência (sheet) */
+  .sos-sheet{position:fixed;inset:0;z-index:90;background:rgba(22,33,46,.6);display:none;align-items:flex-end;justify-content:center}
+  .sos-sheet.on{display:flex}
+  .sos-card{
+    background:var(--card);width:100%;max-width:560px;border-radius:16px 16px 0 0;
+    padding:20px 18px calc(20px + env(safe-area-inset-bottom));max-height:86vh;overflow-y:auto;
+    box-shadow:0 -14px 40px rgba(22,33,46,.35);
+  }
+  .sos-card h3{font-size:20px}
+  .sos-card .sos-sub{font-size:14px;color:var(--ink-soft);margin:4px 0 14px}
+  .sos-opt{
+    display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);
+    border-radius:var(--r-sm);padding:13px 14px;margin-top:8px;font-size:15px;font-weight:500;color:var(--ink);
+    transition:border-color .15s ease,background .15s ease;
+  }
+  .sos-opt:hover{border-color:var(--red);background:var(--red-soft)}
+  .sos-opt .so-key{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--red-deep);display:block;margin-bottom:2px;font-weight:700}
+  .sos-close{margin-top:14px;width:100%;background:transparent;border:1px solid var(--line);color:var(--ink-soft);border-radius:var(--r-sm);padding:11px;font-weight:600;min-height:44px}
+
+  /* ---------- gate ---------- */
+  .gate{position:fixed;inset:0;z-index:100;background:rgba(22,33,46,.58);display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:24px 16px;-webkit-overflow-scrolling:touch}
+  .gate[hidden]{display:none}
+  .gate-card{background:var(--card);border-radius:16px;max-width:480px;width:100%;padding:26px 22px 28px;margin:auto 0;box-shadow:0 24px 60px rgba(22,33,46,.4);border-top:4px solid var(--red)}
+  .gate-card h2{font-size:23px;margin-top:8px}
+  .gate-frame{font-size:14px;color:var(--ink-soft);margin-top:10px}
+  .req{color:var(--red-deep)}
+  .field-err{display:none;font-size:12px;color:var(--red-deep);margin-top:5px;font-weight:600}
+  .field.invalid .field-err{display:block}
+  .field.invalid input{border-color:var(--red)}
+  .consent{display:flex;gap:10px;align-items:flex-start;margin-top:16px;font-size:13px;color:var(--ink-soft);cursor:pointer}
+  .consent input{width:20px;height:20px;margin-top:2px;flex:none;accent-color:var(--red)}
+  .btn-primary{display:block;width:100%;margin-top:20px;background:var(--red);color:#fff;border:0;border-radius:var(--r-sm);font-family:'Space Grotesk',sans-serif;font-size:17px;font-weight:600;padding:15px 20px;min-height:52px;transition:background .2s ease}
+  .btn-primary:hover{background:var(--red-deep)}
+  .btn-primary[disabled]{opacity:.6;cursor:wait}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important;scroll-behavior:auto !important}}
+
+  @media (max-width:720px){.howto-grid{grid-template-columns:1fr}section{padding:32px 0}}
+  @media (max-width:400px){.wrap{padding:0 14px}.hero-inner{padding:40px 16px 34px}.gate-card{padding:22px 16px 24px}.sos-btn{font-size:14px;padding:13px 18px}}
+</style>
+</head>
+<body>
+
+<!-- ============ GATE ============ -->
+<div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
+  <div class="gate-card">
+    <div id="gateForm">
+      <span class="eyebrow">Bônus 2 · Execução 5.0</span>
+      <h2 id="gateTitle">Antes de abrir seu protocolo</h2>
+      <p class="gate-frame">Isto aqui é a sua ferramenta de emergência pra quando a cabeça travar. Deixa a gente saber que é você — pra acompanhar seu progresso no Execução 5.0.</p>
+
+      <div class="field" id="fNome">
+        <label for="inNome">Nome <span class="req">*</span></label>
+        <input type="text" id="inNome" autocomplete="name" placeholder="Seu nome">
+        <span class="field-err">Digite seu nome.</span>
+      </div>
+      <div class="field" id="fEmail">
+        <label for="inEmail">E-mail <span class="req">*</span></label>
+        <input type="text" id="inEmail" autocomplete="email" inputmode="email" placeholder="voce@email.com">
+        <span class="field-err">Digite um e-mail válido.</span>
+      </div>
+      <div class="field" id="fTel">
+        <label for="inTel">Telefone / WhatsApp (com DDD) <span class="req">*</span></label>
+        <input type="text" id="inTel" autocomplete="tel" inputmode="tel" placeholder="(11) 99999-9999">
+        <span class="field-err">Digite seu telefone com DDD (mínimo 10 dígitos).</span>
+      </div>
+      <div class="field" id="fConsent" style="margin-top:6px">
+        <label class="consent" for="inConsent">
+          <input type="checkbox" id="inConsent">
+          <span>Autorizo o contato e o uso dos meus dados para acompanhamento do meu progresso no Execução 5.0. <span class="req">*</span></span>
+        </label>
+        <span class="field-err">É preciso autorizar para continuar.</span>
+      </div>
+      <button type="button" class="btn-primary" id="btnGate">Abrir meu protocolo →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">Bônus 2 · Execução 5.0</span>
+    <h1>Protocolo Anti-Autossabotagem</h1>
+    <p class="lede">Saber o método não basta. Você precisa saber o que fazer <strong>no exato segundo em que a sua cabeça trava</strong> — quando a mão vai pro celular, quando a tarefa some da tela, quando bate o "depois eu faço". Este é o seu extintor: abra na hora da crise.</p>
+    <div class="hero-sign">
+      <p>"A procrastinação não te derruba de uma vez. Ela te derruba num segundo específico — sempre o mesmo. Aprenda a reconhecer esse segundo e o que fazer nele, e o jogo vira."</p>
+      <p class="who">— Christian Barbosa</p>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- ============ COMO USAR ============ -->
+  <section aria-labelledby="h-como">
+    <div class="section-head">
+      <p class="sec-tag">// <b>00</b> · Como usar</p>
+      <h2 id="h-como">Três formas de usar isto</h2>
+    </div>
+    <div class="howto-grid">
+      <div class="howto-card">
+        <span class="howto-num">01</span>
+        <h3>Descubra seus padrões</h3>
+        <p>No Mapa de Autossabotagem, marque o que te pega. Os protocolos certos acendem com a etiqueta "TE PEGA".</p>
+      </div>
+      <div class="howto-card">
+        <span class="howto-num">02</span>
+        <h3>"Tô travando agora"</h3>
+        <p>Travou de verdade? Toque no botão vermelho fixo na tela, escolha o sentimento e vá direto ao protocolo.</p>
+      </div>
+      <div class="howto-card">
+        <span class="howto-num">03</span>
+        <h3>Registre as recaídas</h3>
+        <p>Anote no Diário toda vez que travar. Em poucos dias você enxerga qual padrão mais te derruba.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MAPA ============ -->
+  <section aria-labelledby="h-mapa">
+    <div class="section-head">
+      <p class="sec-tag">// <b>01</b> · Auto-diagnóstico</p>
+      <h2 id="h-mapa">Mapa de Autossabotagem</h2>
+      <p class="section-sub">Marque os padrões que reconhece em você. Isto é só seu — não é enviado a ninguém. Cada marca acende o protocolo correspondente lá embaixo.</p>
+    </div>
+    <div class="mapa-box" id="mapaBox"></div>
+  </section>
+
+  <!-- ============ PROTOCOLOS ============ -->
+  <section aria-labelledby="h-proto">
+    <div class="section-head">
+      <p class="sec-tag">// <b>02</b> · Protocolos de emergência</p>
+      <h2 id="h-proto">O que fazer em cada trava</h2>
+      <p class="section-sub">Nove padrões, nove protocolos. Cada um tem o gatilho, o que acontece na sua cabeça e o movimento de 60 segundos pra sair da crise.</p>
+    </div>
+    <div id="protoList"></div>
+  </section>
+
+  <!-- ============ PROMPTS ============ -->
+  <section aria-labelledby="h-prompts">
+    <div class="section-head">
+      <p class="sec-tag">// <b>03</b> · Reforço</p>
+      <h2 id="h-prompts">Prompts de emergência</h2>
+      <p class="section-sub">Quando o movimento de 60 segundos não bastar, copie o prompt e cole na sua Inteligência Artificial (ChatGPT, Claude, Gemini…). Troque o trecho destacado pela sua tarefa.</p>
+    </div>
+    <div id="promptList"></div>
+  </section>
+
+  <!-- ============ DIÁRIO ============ -->
+  <section aria-labelledby="h-diario">
+    <div class="section-head">
+      <p class="sec-tag">// <b>04</b> · Registro pessoal</p>
+      <h2 id="h-diario">Diário de Recaídas</h2>
+      <p class="section-sub">Toda vez que travar, registre. Fica salvo só no seu navegador. Com o tempo, o padrão dominante aparece — e o que se enxerga, se resolve.</p>
+    </div>
+    <div class="diario-box">
+      <div class="field">
+        <label for="recPat">Qual padrão te pegou agora?</label>
+        <select id="recPat"></select>
+      </div>
+      <div class="field">
+        <label for="recNota">Nota (opcional)</label>
+        <textarea id="recNota" placeholder="O que estava acontecendo? O que você fez?"></textarea>
+      </div>
+      <button type="button" class="btn-dark" id="btnReg">Registrar recaída</button>
+      <div class="diario-dominante" id="recDom"></div>
+      <div class="rec-list" id="recList"></div>
+      <button type="button" class="btn-ghost" id="btnClearRec" style="display:none">Limpar diário</button>
+    </div>
+  </section>
+
+  <!-- ============ FECHO ============ -->
+  <footer class="footer">
+    <p class="end-line">Travar faz parte. Desistir de agir, não.</p>
+    <span class="mono">Execução 5.0 · Christian Barbosa · Procrastinação</span>
+  </footer>
+
+</div>
+
+<!-- botão flutuante -->
+<button type="button" class="sos-btn" id="sosBtn"><span class="dot"></span>Tô travando agora</button>
+
+<!-- seletor de emergência -->
+<div class="sos-sheet" id="sosSheet" role="dialog" aria-modal="true" aria-labelledby="sosTitle">
+  <div class="sos-card">
+    <h3 id="sosTitle">O que você tá sentindo agora?</h3>
+    <p class="sos-sub">Escolha o mais parecido. Eu te levo direto ao protocolo certo.</p>
+    <div id="sosOpts"></div>
+    <button type="button" class="sos-close" id="sosClose">Fechar</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  /* =====================================================
+     CONFIGURAÇÃO SUPABASE — PREENCHA ANTES DE PUBLICAR
+     Use SOMENTE a chave anon (public). NUNCA a service_role.
+     Com os valores de exemplo, a página funciona normal —
+     só não envia dados (modo de teste).
+  ===================================================== */
+  var SUPABASE_URL  = 'https://qccfeuqxyesdrcgjnxng.supabase.co';
+  var SUPABASE_ANON = 'sb_publishable_Er-MxgKomN4C4P1mcA4H1g_zPPhJOs9';
+  var TABLE = 'bonus2_antisabotagem';
+
+  var supabaseAtivo = SUPABASE_URL.indexOf('SEU-PROJETO') === -1 &&
+                      SUPABASE_ANON.indexOf('COLE_AQUI') === -1;
+
+  /* ---------- dados: 9 padrões ---------- */
+  var PADROES = [
+    {
+      key:'foco', num:'01', nome:'Fuga pra tela',
+      mapa:'Abro o celular "só um segundo" e some meia hora.',
+      sos:'Fui pro celular / redes sociais',
+      gatilho:'Você abre o Instagram "só um segundo" e quando vê, passou meia hora.',
+      mente:'Seu cérebro trocou a tarefa difícil por uma recompensa fácil e imediata. É o padrão automático dele — não é falha de caráter.',
+      mov:'Celular em OUTRO cômodo. Só a tarefa na tela. Um passo de 5 minutos, começando agora.',
+      persist:'rode o prompt', promptKey:'distracao'
+    },
+    {
+      key:'energia', num:'02', nome:'Tanque vazio',
+      mapa:'A vontade aparece, mas o corpo não responde.',
+      sos:'Tô sem energia / sem pique',
+      gatilho:'A vontade até aparece, mas o corpo não acompanha. Você se sente pesado, lento.',
+      mente:'Energia baixa quase nunca é preguiça — é sono, comida ou corpo parado demais. Corpo fraco puxa mente fraca.',
+      mov:'Levante. Beba água. 20 segundos de movimento (polichinelo, subir e descer). Volte e faça o primeiro micro-passo.',
+      persist:'escolha o micro-passo MAIS FÁCIL de todos e faça só ele.', promptKey:null
+    },
+    {
+      key:'preguica', num:'03', nome:'Névoa',
+      mapa:'Bate um "não quero" difuso, sem nada específico.',
+      sos:'Tô com preguiça / sem vontade',
+      gatilho:'Uma resistência difusa, um "não quero" que não aponta pra nada específico.',
+      mente:'Preguiça é sintoma, não causa. Quase sempre ela esconde falta de clareza sobre o que exatamente fazer.',
+      mov:'Escreva a tarefa em uma frase concreta: o quê + até quando. Se ainda pesar, quebre no passo de 5 minutos.',
+      persist:'rode o prompt', promptKey:'diagnostico'
+    },
+    {
+      key:'multi', num:'04', nome:'Tudo ao mesmo tempo',
+      mapa:'6 abas abertas, 4 coisas começadas, nada terminado.',
+      sos:'Tô fazendo tudo ao mesmo tempo',
+      gatilho:'Seis abas abertas, quatro coisas começadas e nenhuma terminada.',
+      mente:'Multitarefa parece produtivo e é o oposto. Cada troca de tarefa custa foco que você não recupera.',
+      mov:'Feche tudo. Escolha UMA tarefa. Lembre: o "sim" pra ela é o "não" pra todo o resto agora.',
+      persist:'defina em uma frase o ÚNICO resultado do próximo bloco de 20 minutos.', promptKey:null
+    },
+    {
+      key:'info', num:'05', nome:'Preparo infinito',
+      mapa:'"Deixa eu pesquisar mais um pouco" — e nunca começo.',
+      sos:'Tô pesquisando demais / me preparando',
+      gatilho:'"Deixa eu pesquisar mais um pouquinho antes." E você nunca começa de fato.',
+      mente:'É perfeccionismo disfarçado de preparo. Buscar mais informação virou a sua forma preferida de adiar.',
+      mov:'Pare a pesquisa. Faça a versão feia do primeiro passo. Agora. Feio e pronto vence perfeito e parado.',
+      persist:'dê a si mesmo só mais 5 minutos de preparo — depois executa como estiver.', promptKey:null
+    },
+    {
+      key:'urgencia', num:'06', nome:'Apagando incêndio',
+      mapa:'O dia acabou cheio de urgências e nada importante feito.',
+      sos:'Só apaguei incêndio o dia todo',
+      gatilho:'O dia acabou. Mil urgências resolvidas, nenhuma coisa importante tocada.',
+      mente:'Quem vive no urgente não vive o importante. Gastar o dia no circunstancial é uma fuga confortável.',
+      mov:'Bloqueie 20 minutos AGORA só pro que é importante. Notificações desligadas. Nada mais entra.',
+      persist:'amanhã faça o passo importante ANTES do urgente. A primeira hora do dia é sagrada.', promptKey:null
+    },
+    {
+      key:'importancia', num:'07', nome:'Sem sentido',
+      mapa:'"Por que eu tô fazendo isso mesmo?"',
+      sos:'Não sei por que tô fazendo isso',
+      gatilho:'Bate a pergunta no meio da tarefa: "por que eu tô fazendo isso mesmo?".',
+      mente:'Sem conexão com o motivo real, o cérebro cria resistência. Às vezes importa e você perdeu de vista; às vezes não importa mesmo.',
+      mov:'Responda em uma linha: "o que eu ganho terminando isso?". Achou o motivo, mentaliza e começa. Não achou, é candidata a cancelar ou delegar.',
+      persist:'rode o prompt', promptKey:'vale'
+    },
+    {
+      key:'medo', num:'08', nome:'O que pode dar errado',
+      mapa:'Tarefa simples, mas um travamento estranho ao encostar nela.',
+      sos:'Tô travado num medo estranho',
+      gatilho:'A tarefa é simples, mas dá um travamento estranho toda vez que você vai encostar nela.',
+      mente:'É medo escondido — de julgamento, de exposição, de não ser bom o bastante. Uma voz interna que faz você adiar sem perceber.',
+      mov:'Nomeie o medo em voz alta: "tô com medo de ___". Só nomear já reduz o poder dele. Depois, o menor passo possível.',
+      persist:'rode o prompt', promptKey:'medo'
+    },
+    {
+      key:'delegar', num:'09', nome:'Não era pra ser meu',
+      mapa:'A tarefa trava porque, no fundo, nem deveria ser minha.',
+      sos:'Isso nem deveria ser comigo',
+      gatilho:'A tarefa trava e, no fundo, você sabe: ela nem deveria ser sua.',
+      mente:'Todo "sim" pra uma tarefa dos outros é um "não" pro que é seu. É o tempo que falta pro que de fato importa.',
+      mov:'Pergunte: "só eu posso fazer isso?". Se não, decida agora — delegar, renegociar ou dizer não — e já escreva pra quem vai passar.',
+      persist:'liste as 3 tarefas da semana que não deveriam ser suas e devolva uma hoje.', promptKey:null
+    }
+  ];
+
+  /* ---------- dados: 4 prompts ---------- */
+  var ABERTURA = 'Atue como mentor especialista em produtividade, baseado no livro "Por Que as Pessoas Não Fazem o Que Deveriam Fazer" e na metodologia Tríade do Tempo, do Christian Barbosa.';
+  var PROMPTS = [
+    {
+      key:'distracao', num:'Prompt 1', titulo:'Me tira da distração',
+      when:'Quando você começa a tarefa e foge pras redes.',
+      corpo:ABERTURA + '\n\nEstou travando agora: começo a tarefa [DESCREVA SUA TAREFA] e fujo pras redes sociais toda hora.\n\nMe dê UMA ação de 60 segundos pra voltar ao foco agora, e em seguida um micro-passo de 5 minutos pra retomar a tarefa. Seja direto, sem floreio.'
+    },
+    {
+      key:'diagnostico', num:'Prompt 2', titulo:'Diagnostica meu bloqueio',
+      when:'Quando você não sabe por que está travando.',
+      corpo:ABERTURA + '\n\nEstou procrastinando esta tarefa: [DESCREVA SUA TAREFA].\n\nDiagnostique o motivo real do meu bloqueio, considerando as causas mais comuns: falta de clareza, medo, ausência de recompensa, tarefa grande demais ou falta de conexão com o que importa. Faça perguntas objetivas, uma de cada vez, e ao final diga meu bloqueio principal e o primeiro passo prático. Sem floreio.'
+    },
+    {
+      key:'medo', num:'Prompt 3', titulo:'Enfrenta meu medo',
+      when:'Quando sabe o que fazer, mas algo trava por dentro.',
+      corpo:ABERTURA + '\n\nEstou adiando esta tarefa: [DESCREVA SUA TAREFA] — e acho que o motivo é medo, mesmo sem admitir com clareza.\n\nListe os medos escondidos mais prováveis por trás desse adiamento (medo de errar, de ser julgado, do resultado, do que vem depois). Pra cada medo, responda com uma ação concreta e pequena que eu posso fazer hoje pra neutralizá-lo. Direto e prático.'
+    },
+    {
+      key:'vale', num:'Prompt 4', titulo:'Vale a pena ou eu delego?',
+      when:'Quando desconfia que a tarefa não importa de verdade.',
+      corpo:ABERTURA + '\n\nVenho adiando esta tarefa: [DESCREVA SUA TAREFA].\n\nMe questione com perguntas diretas sobre a importância real dela: o que acontece se eu nunca fizer? Ela me aproxima do que importa ou é só urgência/obrigação dos outros? Se ao final ficar claro que não é importante, me dê os motivos objetivos pra cancelar ou delegar sem culpa. Se for, diga o primeiro passo de 5 minutos.'
+    }
+  ];
+
+  /* ---------- storage seguro ---------- */
+  var memStore = {};
+  function storeGet(k){ try{ return window.localStorage.getItem(k); }catch(e){ return memStore.hasOwnProperty(k)?memStore[k]:null; } }
+  function storeSet(k,v){ try{ window.localStorage.setItem(k,v); }catch(e){} memStore[k]=v; }
+  function storeRemove(k){ try{ window.localStorage.removeItem(k); }catch(e){} delete memStore[k]; }
+  var KP = 'bonus2_';
+  function K(n){ return KP+n; }
+
+  function $(id){ return document.getElementById(id); }
+  function all(s){ return document.querySelectorAll(s); }
+  function on(el,ev,fn){ if(el){ el.addEventListener(ev,fn,false); } }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function highlightPh(s){ return esc(s).replace(/\[DESCREVA SUA TAREFA\]/g,'<span class="ph">[DESCREVA SUA TAREFA]</span>'); }
+
+  /* ---------- supabase ---------- */
+  function sbInsert(reg, cb){
+    if(!supabaseAtivo){ if(cb){cb();} return; }
+    try{
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', SUPABASE_URL + '/rest/v1/' + TABLE, true);
+      xhr.setRequestHeader('apikey', SUPABASE_ANON);
+      xhr.setRequestHeader('Authorization', 'Bearer ' + SUPABASE_ANON);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.setRequestHeader('Prefer', 'return=minimal');
+      xhr.onreadystatechange = function(){ if(xhr.readyState===4 && cb){ cb(); } };
+      xhr.send(JSON.stringify(reg));
+    }catch(e){ if(cb){cb();} }
+  }
+
+  /* ---------- render: mapa ---------- */
+  (function renderMapa(){
+    var box = $('mapaBox'), html = '', i;
+    for(i=0;i<PADROES.length;i++){
+      var p = PADROES[i];
+      html += '<div class="mapa-item" data-key="'+p.key+'" role="checkbox" aria-checked="false" tabindex="0">' +
+        '<span class="cross" aria-hidden="true"></span>' +
+        '<span class="m-txt"><strong>'+esc(p.nome)+'</strong><span>'+esc(p.mapa)+'</span></span></div>';
+    }
+    box.innerHTML = html + '<div class="mapa-resumo" id="mapaResumo">Nenhum padrão marcado ainda.</div>';
+  })();
+
+  /* ---------- render: protocolos ---------- */
+  (function renderProto(){
+    var list = $('protoList'), html = '', i;
+    for(i=0;i<PADROES.length;i++){
+      var p = PADROES[i];
+      var persistHtml = esc(p.persist);
+      if(p.promptKey){
+        persistHtml = esc(p.persist) + ' <button type="button" class="jump" data-jump="'+p.promptKey+'">' + esc(promptTitulo(p.promptKey)) + '</button>.';
+      }
+      html += '<div class="proto" id="proto-'+p.key+'" data-key="'+p.key+'">' +
+        '<div class="proto-head"><span class="proto-num">'+p.num+'</span><h3>'+esc(p.nome)+'</h3><span class="te-pega">Te pega</span></div>' +
+        '<div class="proto-body">' +
+          '<div class="p-row p-gatilho"><div class="p-label">O gatilho</div><p>'+esc(p.gatilho)+'</p></div>' +
+          '<div class="p-row p-mente"><div class="p-label">Na sua cabeça</div><p>'+esc(p.mente)+'</p></div>' +
+          '<div class="p-row p-60"><div class="p-label">▸ Movimento de 60 segundos</div><p>'+esc(p.mov)+'</p></div>' +
+          '<div class="p-row p-persist"><b>Se persistir:</b> '+persistHtml+'</div>' +
+        '</div></div>';
+    }
+    list.innerHTML = html;
+  })();
+
+  function promptTitulo(key){
+    var i; for(i=0;i<PROMPTS.length;i++){ if(PROMPTS[i].key===key){ return PROMPTS[i].titulo; } } return key;
+  }
+
+  /* ---------- render: prompts ---------- */
+  (function renderPrompts(){
+    var list = $('promptList'), html = '', i;
+    for(i=0;i<PROMPTS.length;i++){
+      var p = PROMPTS[i];
+      html += '<div class="prompt" id="prompt-'+p.key+'">' +
+        '<h3><span class="prompt-num">'+esc(p.num)+'</span>'+esc(p.titulo)+'</h3>' +
+        '<p class="prompt-when">'+esc(p.when)+'</p>' +
+        '<div class="prompt-body" id="pb-'+p.key+'">'+highlightPh(p.corpo)+'</div>' +
+        '<button type="button" class="btn-copy" data-copy="'+p.key+'">Copiar prompt</button></div>';
+    }
+    list.innerHTML = html;
+  })();
+
+  /* ---------- render: select diário + sos opts ---------- */
+  (function renderSelects(){
+    var sel = $('recPat'), opts = '<option value="">Selecione o padrão…</option>', i;
+    var sosHtml = '';
+    for(i=0;i<PADROES.length;i++){
+      var p = PADROES[i];
+      opts += '<option value="'+p.key+'">'+esc(p.nome)+'</option>';
+      sosHtml += '<button type="button" class="sos-opt" data-sos="'+p.key+'"><span class="so-key">'+p.num+'</span>'+esc(p.sos)+'</button>';
+    }
+    sel.innerHTML = opts;
+    $('sosOpts').innerHTML = sosHtml;
+  })();
+
+  /* ---------- mapa: interação ---------- */
+  (function initMapa(){
+    var items = all('.mapa-item'), i;
+    function refreshResumo(){
+      var n = all('.mapa-item.on').length;
+      var r = $('mapaResumo');
+      if(n===0){ r.textContent = 'Nenhum padrão marcado ainda.'; }
+      else if(n===1){ r.textContent = '1 padrão te pega. Veja o protocolo marcado abaixo.'; }
+      else { r.textContent = n + ' padrões te pegam. Todos estão marcados nos protocolos abaixo.'; }
+    }
+    function setItem(item, on, persist){
+      var key = item.getAttribute('data-key');
+      if(on){ if(item.className.indexOf('on')===-1){ item.className += ' on'; } }
+      else { item.className = item.className.replace(/\s*\bon\b/,''); }
+      item.setAttribute('aria-checked', on?'true':'false');
+      var proto = $('proto-'+key);
+      if(proto){ if(on){ if(proto.className.indexOf('pega')===-1){ proto.className += ' pega'; } } else { proto.className = proto.className.replace(/\s*\bpega\b/,''); } }
+      if(persist){ if(on){ storeSet(K('mapa_'+key),'1'); } else { storeRemove(K('mapa_'+key)); } refreshResumo(); }
+    }
+    for(i=0;i<items.length;i++){
+      (function(item){
+        var key = item.getAttribute('data-key');
+        if(storeGet(K('mapa_'+key))==='1'){ setItem(item, true, false); }
+        function toggle(){ setItem(item, item.className.indexOf('on')===-1, true); }
+        on(item,'click',toggle);
+        on(item,'keydown',function(ev){ if(ev.key===' '||ev.key==='Enter'||ev.keyCode===32||ev.keyCode===13){ ev.preventDefault(); toggle(); } });
+      })(items[i]);
+    }
+    refreshResumo();
+  })();
+
+  /* ---------- pular pro card + flash ---------- */
+  function jumpTo(id){
+    var el = $(id);
+    if(!el){ return; }
+    el.scrollIntoView({block:'start'});
+    el.className = el.className.replace(/\s*\bflash\b/,'');
+    void el.offsetWidth;
+    el.className += ' flash';
+  }
+  (function initJumps(){
+    var i, btns = all('[data-jump]');
+    for(i=0;i<btns.length;i++){
+      (function(b){ on(b,'click',function(){ jumpTo('prompt-'+b.getAttribute('data-jump')); }); })(btns[i]);
+    }
+  })();
+
+  /* ---------- copiar ---------- */
+  function copyText(text, btn){
+    function feedback(ok){
+      btn.textContent = ok ? '✓ Copiado!' : 'Selecione e copie manualmente';
+      btn.className = 'btn-copy copied';
+      setTimeout(function(){ btn.textContent = 'Copiar prompt'; btn.className = 'btn-copy'; }, 2200);
+    }
+    var used = false;
+    try{
+      if(navigator.clipboard && navigator.clipboard.writeText){
+        used = true;
+        navigator.clipboard.writeText(text).then(function(){ feedback(true); }, function(){ fb(); });
+      }
+    }catch(e){}
+    if(!used){ fb(); }
+    function fb(){
+      try{
+        var ta = document.createElement('textarea');
+        ta.value = text; ta.setAttribute('readonly',''); ta.style.position='fixed'; ta.style.left='-9999px';
+        document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0,text.length);
+        var ok = document.execCommand('copy'); document.body.removeChild(ta); feedback(ok);
+      }catch(e2){ feedback(false); }
+    }
+  }
+  (function initCopy(){
+    var i, btns = all('[data-copy]');
+    for(i=0;i<btns.length;i++){
+      (function(b){
+        on(b,'click',function(){
+          var key = b.getAttribute('data-copy'), p, j;
+          for(j=0;j<PROMPTS.length;j++){ if(PROMPTS[j].key===key){ p = PROMPTS[j]; break; } }
+          if(p){ copyText(p.corpo, b); }
+        });
+      })(btns[i]);
+    }
+  })();
+
+  /* ---------- diário ---------- */
+  (function initDiario(){
+    function load(){ try{ return JSON.parse(storeGet(K('diario'))||'[]'); }catch(e){ return []; } }
+    function save(arr){ storeSet(K('diario'), JSON.stringify(arr)); }
+    function nomeDe(key){ var i; for(i=0;i<PADROES.length;i++){ if(PADROES[i].key===key){ return PADROES[i].nome; } } return key; }
+    function fmt(ts){
+      var d = new Date(ts);
+      function p2(n){ return (n<10?'0':'')+n; }
+      return p2(d.getDate())+'/'+p2(d.getMonth()+1)+' '+p2(d.getHours())+':'+p2(d.getMinutes());
+    }
+    function render(){
+      var arr = load(), i;
+      var list = $('recList'), dom = $('recDom'), clr = $('btnClearRec');
+      if(!arr.length){
+        list.innerHTML = '<p class="rec-empty">Nenhuma recaída registrada ainda. Quando travar, volte aqui.</p>';
+        dom.className = 'diario-dominante'; clr.style.display = 'none'; return;
+      }
+      clr.style.display = 'inline-block';
+      var count = {}, top = null;
+      for(i=0;i<arr.length;i++){ var k = arr[i].pat; count[k]=(count[k]||0)+1; if(!top||count[k]>count[top]){ top=k; } }
+      dom.textContent = 'Padrão que mais te derruba: ' + nomeDe(top) + ' (' + count[top] + 'x de ' + arr.length + ')';
+      dom.className = 'diario-dominante show';
+      var html = '';
+      for(i=0;i<arr.length;i++){
+        var r = arr[i];
+        html += '<div class="rec-item"><div class="rec-top"><span class="rec-pat">'+esc(nomeDe(r.pat))+'</span><span class="rec-when">'+fmt(r.ts)+'</span></div>' +
+          (r.nota ? '<div class="rec-nota">'+esc(r.nota)+'</div>' : '') + '</div>';
+      }
+      list.innerHTML = html;
+    }
+    on($('btnReg'),'click',function(){
+      var pat = $('recPat').value;
+      if(!pat){ $('recPat').focus(); return; }
+      var arr = load();
+      arr.unshift({ pat:pat, nota:$('recNota').value.replace(/^\s+|\s+$/g,''), ts:(new Date()).getTime() });
+      save(arr);
+      $('recNota').value = ''; $('recPat').selectedIndex = 0;
+      render();
+    });
+    on($('btnClearRec'),'click',function(){ storeRemove(K('diario')); render(); });
+    render();
+  })();
+
+  /* ---------- botão de emergência + sheet ---------- */
+  (function initSos(){
+    var sheet = $('sosSheet');
+    function openSheet(){ sheet.className = 'sos-sheet on'; }
+    function closeSheet(){ sheet.className = 'sos-sheet'; }
+    on($('sosBtn'),'click',openSheet);
+    on($('sosClose'),'click',closeSheet);
+    on(sheet,'click',function(ev){ if(ev.target===sheet){ closeSheet(); } });
+    var opts = all('.sos-opt'), i;
+    for(i=0;i<opts.length;i++){
+      (function(b){
+        on(b,'click',function(){
+          closeSheet();
+          jumpTo('proto-'+b.getAttribute('data-sos'));
+        });
+      })(opts[i]);
+    }
+  })();
+
+  /* ---------- gate ---------- */
+  function markInvalid(id, inv){ var f=$(id); if(!f){return;} if(inv){ if(f.className.indexOf('invalid')===-1){ f.className+=' invalid'; } } else { f.className=f.className.replace(/\s*\binvalid\b/,''); } }
+  function validaEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }
+  function validaTel(v){ var d=v.replace(/\D/g,''); return d.length>=10 && d.length<=13; }
+
+  (function initGate(){
+    var gate = $('gate');
+    function liberar(){ $('sosBtn').className = 'sos-btn on'; }
+    if(storeGet(K('gate_done'))==='1'){ gate.hidden = true; liberar(); return; }
+    document.body.style.overflow = 'hidden';
+
+    on($('btnGate'),'click',function(){
+      var nome=$('inNome').value.replace(/^\s+|\s+$/g,'');
+      var email=$('inEmail').value.replace(/^\s+|\s+$/g,'');
+      var tel=$('inTel').value.replace(/^\s+|\s+$/g,'');
+      var consent=$('inConsent').checked;
+      var ok=true;
+      markInvalid('fNome', nome.length<2); if(nome.length<2){ ok=false; }
+      markInvalid('fEmail', !validaEmail(email)); if(!validaEmail(email)){ ok=false; }
+      markInvalid('fTel', !validaTel(tel)); if(!validaTel(tel)){ ok=false; }
+      markInvalid('fConsent', !consent); if(!consent){ ok=false; }
+      if(!ok){ var fi=document.querySelector('.gate .field.invalid input'); if(fi){ fi.focus(); } return; }
+
+      var btn=$('btnGate'); btn.disabled=true; btn.textContent='Enviando…';
+      sbInsert({ nome:nome, email:email, telefone:tel, consentimento:true }, function(){
+        storeSet(K('gate_done'),'1');
+        gate.hidden = true;
+        document.body.style.overflow = '';
+        liberar();
+      });
+    });
+  })();
+
+})();
+</script>
+</body>
+</html>
