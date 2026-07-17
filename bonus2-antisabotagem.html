@@ -265,11 +265,13 @@
 </head>
 <body>
 
-<!-- ============ GATE ============ -->
+<!-- ============ GATE — 2 passos: identificação → pesquisa ============ -->
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
   <div class="gate-card">
-    <div id="gateForm">
-      <span class="eyebrow">Bônus 2 · Execução 5.0</span>
+
+    <!-- PASSO 1: identificação -->
+    <div id="gateId">
+      <span class="eyebrow">Bônus 2 · Execução 5.0 · Passo 1 de 2</span>
       <h2 id="gateTitle">Antes de abrir seu protocolo</h2>
       <p class="gate-frame">Isto aqui é a sua ferramenta de emergência pra quando a cabeça travar. Deixa a gente saber que é você — pra acompanhar seu progresso no Execução 5.0.</p>
 
@@ -288,6 +290,124 @@
         <input type="text" id="inTel" autocomplete="tel" inputmode="tel" placeholder="(11) 99999-9999">
         <span class="field-err">Digite seu telefone com DDD (mínimo 10 dígitos).</span>
       </div>
+      <button type="button" class="btn-primary" id="btnStep1">Continuar →</button>
+    </div>
+
+    <!-- PASSO 2: pesquisa (objeções · dores · desejos) -->
+    <div id="gateSurvey" hidden>
+      <span class="eyebrow">Bônus 2 · Execução 5.0 · Passo 2 de 2</span>
+      <h2>Como a autossabotagem age em você?</h2>
+      <p class="gate-frame">Suas respostas ajudam o Christian a afinar o método pra quem trava como você. Vai rápido — e é anônimo no estudo.</p>
+
+      <div class="field" id="fVoz">
+        <label for="inVoz">1. Qual dessas frases mais soa como a sua voz interna? <span class="req">*</span></label>
+        <select id="inVoz">
+          <option value="">Selecione…</option>
+          <option>Eu sou assim mesmo, não muda</option>
+          <option>Já tentei de tudo, nada dura</option>
+          <option>Falta disciplina na minha personalidade</option>
+          <option>Só funciono sob pressão</option>
+          <option>Tenho medo de tentar e falhar de novo</option>
+        </select>
+        <span class="field-err">Selecione uma opção.</span>
+      </div>
+
+      <div class="field" id="fMomento">
+        <label for="inMomento">2. Em que momento a autossabotagem mais te ataca? <span class="req">*</span></label>
+        <select id="inMomento">
+          <option value="">Selecione…</option>
+          <option>Na hora de começar</option>
+          <option>No meio, quando complica</option>
+          <option>Perto de terminar</option>
+          <option>Depois de um erro ou crítica</option>
+          <option>Quando o resultado demora</option>
+        </select>
+        <span class="field-err">Selecione uma opção.</span>
+      </div>
+
+      <div class="field" id="fSent">
+        <label for="inSent">3. Que sentimento mais aparece quando você se sabota? <span class="req">*</span></label>
+        <select id="inSent">
+          <option value="">Selecione…</option>
+          <option>Frustração</option>
+          <option>Culpa</option>
+          <option>Ansiedade</option>
+          <option>Vergonha</option>
+          <option>Raiva de mim mesmo</option>
+          <option>Indiferença</option>
+        </select>
+        <span class="field-err">Selecione uma opção.</span>
+      </div>
+
+      <div class="field" id="fFreq">
+        <label for="inFreq">4. Com que frequência a procrastinação te derruba? <span class="req">*</span></label>
+        <select id="inFreq">
+          <option value="">Selecione…</option>
+          <option>Todo dia</option>
+          <option>Quase todo dia</option>
+          <option>Algumas vezes na semana</option>
+          <option>De vez em quando</option>
+        </select>
+        <span class="field-err">Selecione uma opção.</span>
+      </div>
+
+      <div class="field" id="fDuvida">
+        <label for="inDuvida">5. Qual a maior dúvida que ainda te trava? <span class="req">*</span></label>
+        <select id="inDuvida">
+          <option value="">Selecione…</option>
+          <option>Será que dessa vez é diferente?</option>
+          <option>Não tenho tempo pra isso</option>
+          <option>Não vou conseguir manter</option>
+          <option>Já é tarde pra mim</option>
+          <option>E se o problema for eu mesmo?</option>
+        </select>
+        <span class="field-err">Selecione uma opção.</span>
+      </div>
+
+      <div class="field" id="fMedo">
+        <label for="inMedo">6. O que mais te assusta se nada mudar? <span class="req">*</span></label>
+        <select id="inMedo">
+          <option value="">Selecione…</option>
+          <option>Estagnar na carreira</option>
+          <option>Perder dinheiro e oportunidades</option>
+          <option>Decepcionar quem amo</option>
+          <option>Mais um ano perdido</option>
+          <option>Perder a fé em mim</option>
+        </select>
+        <span class="field-err">Selecione uma opção.</span>
+      </div>
+
+      <div class="field" id="fPrior">
+        <label for="inPrior">7. Vencendo isso, o que quer conquistar primeiro? <span class="req">*</span></label>
+        <select id="inPrior">
+          <option value="">Selecione…</option>
+          <option>Deslanchar no trabalho ou negócio</option>
+          <option>Cuidar da saúde</option>
+          <option>Organizar as finanças</option>
+          <option>Reconectar relacionamentos</option>
+          <option>Realizar um sonho parado</option>
+        </select>
+        <span class="field-err">Selecione uma opção.</span>
+      </div>
+
+      <div class="field" id="fTarefa">
+        <label for="inTarefa">8. Qual tarefa ou decisão você vem adiando que mais pesa na consciência — e o que te impede? <span class="req">*</span></label>
+        <textarea id="inTarefa" rows="2" placeholder="Escreva com suas palavras…"></textarea>
+        <span class="field-err">Conte pra gente, mesmo que em poucas palavras.</span>
+      </div>
+
+      <div class="field" id="fCusto">
+        <label for="inCusto">9. O que a procrastinação já te custou de mais doloroso (uma oportunidade, um dinheiro, uma relação)? <span class="req">*</span></label>
+        <textarea id="inCusto" rows="2" placeholder="O que ela já te tirou…"></textarea>
+        <span class="field-err">Conte pra gente, mesmo que em poucas palavras.</span>
+      </div>
+
+      <div class="field" id="fDia">
+        <label for="inDia">10. Imagine daqui a 1 ano, já livre disso: descreva como é um dia seu. <span class="req">*</span></label>
+        <textarea id="inDia" rows="2" placeholder="Como é a sua vida sem a autossabotagem…"></textarea>
+        <span class="field-err">Conte pra gente, mesmo que em poucas palavras.</span>
+      </div>
+
       <div class="field" id="fConsent" style="margin-top:6px">
         <label class="consent" for="inConsent">
           <input type="checkbox" id="inConsent">
@@ -295,8 +415,10 @@
         </label>
         <span class="field-err">É preciso autorizar para continuar.</span>
       </div>
+
       <button type="button" class="btn-primary" id="btnGate">Abrir meu protocolo →</button>
     </div>
+
   </div>
 </div>
 
@@ -791,20 +913,51 @@
     if(storeGet(K('gate_done'))==='1'){ gate.hidden = true; liberar(); return; }
     document.body.style.overflow = 'hidden';
 
-    on($('btnGate'),'click',function(){
+    var dados = {};
+
+    // ---- PASSO 1: identificação ----
+    on($('btnStep1'),'click',function(){
       var nome=$('inNome').value.replace(/^\s+|\s+$/g,'');
       var email=$('inEmail').value.replace(/^\s+|\s+$/g,'');
       var tel=$('inTel').value.replace(/^\s+|\s+$/g,'');
-      var consent=$('inConsent').checked;
       var ok=true;
       markInvalid('fNome', nome.length<2); if(nome.length<2){ ok=false; }
       markInvalid('fEmail', !validaEmail(email)); if(!validaEmail(email)){ ok=false; }
       markInvalid('fTel', !validaTel(tel)); if(!validaTel(tel)){ ok=false; }
-      markInvalid('fConsent', !consent); if(!consent){ ok=false; }
       if(!ok){ var fi=document.querySelector('.gate .field.invalid input'); if(fi){ fi.focus(); } return; }
+      dados.nome=nome; dados.email=email; dados.telefone=tel;
+      $('gateId').hidden = true;
+      $('gateSurvey').hidden = false;
+      gate.scrollTop = 0;
+      $('inVoz').focus();
+    });
+
+    // ---- PASSO 2: pesquisa (objeções · dores · desejos) ----
+    on($('btnGate'),'click',function(){
+      var voz=$('inVoz').value, momento=$('inMomento').value, sent=$('inSent').value,
+          freq=$('inFreq').value, duvida=$('inDuvida').value, medo=$('inMedo').value,
+          prior=$('inPrior').value;
+      var tarefa=$('inTarefa').value.replace(/^\s+|\s+$/g,'');
+      var custo=$('inCusto').value.replace(/^\s+|\s+$/g,'');
+      var dia=$('inDia').value.replace(/^\s+|\s+$/g,'');
+      var consent=$('inConsent').checked;
+
+      var ok=true;
+      function req(id, cond){ markInvalid(id, cond); if(cond){ ok=false; } }
+      req('fVoz', !voz); req('fMomento', !momento); req('fSent', !sent);
+      req('fFreq', !freq); req('fDuvida', !duvida); req('fMedo', !medo); req('fPrior', !prior);
+      req('fTarefa', tarefa.length<2); req('fCusto', custo.length<2); req('fDia', dia.length<2);
+      req('fConsent', !consent);
+      if(!ok){ var fi=document.querySelector('.gate .field.invalid input, .gate .field.invalid select, .gate .field.invalid textarea'); if(fi){ fi.focus(); } return; }
 
       var btn=$('btnGate'); btn.disabled=true; btn.textContent='Enviando…';
-      sbInsert({ nome:nome, email:email, telefone:tel, consentimento:true }, function(){
+      sbInsert({
+        nome:dados.nome, email:dados.email, telefone:dados.telefone,
+        voz_interna:voz, momento_ataque:momento, sentimento:sent, frequencia:freq,
+        maior_duvida:duvida, medo_futuro:medo, prioridade:prior,
+        tarefa_adiada:tarefa, custo_doloroso:custo, dia_livre:dia,
+        consentimento:true
+      }, function(){
         storeSet(K('gate_done'),'1');
         gate.hidden = true;
         document.body.style.overflow = '';
