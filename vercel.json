@@ -5,11 +5,6 @@
       "has": [{ "type": "host", "value": "protocolo-antisabotagem.vercel.app" }],
       "dest": "/bonus2-antisabotagem.html"
     },
-    {
-      "src": "/",
-      "has": [{ "type": "host", "value": "protocolo-execucao5.vercel.app" }],
-      "dest": "/bonus2-antisabotagem.html"
-    },
     { "handle": "filesystem" }
   ]
 }
