@@ -93,7 +93,7 @@
   .howto-card p{font-size:14px;color:var(--ink-soft)}
 
   /* ---------- mapa de autossabotagem ---------- */
-  .mapa-box{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:8px 18px 18px}
+  .mapa-box{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:8px 18px 18px;scroll-margin-top:80px}
   .mapa-item{
     display:flex;gap:12px;align-items:flex-start;
     padding:13px 4px;border-bottom:1px dashed var(--line);cursor:pointer;
@@ -118,8 +118,21 @@
 
   /* ---------- protocolos ---------- */
   .proto{
+    display:none;
     background:var(--card);border:1px solid var(--line);border-radius:var(--r);
     padding:0;margin-top:14px;overflow:hidden;scroll-margin-top:80px;
+  }
+  /* só aparece o que pega ele (marcado no mapa) ou aberto pelo SOS */
+  .proto.pega,.proto.revelado{display:block}
+  .proto-vazio{
+    background:var(--card);border:1px dashed var(--line);border-radius:var(--r);
+    padding:26px 20px;text-align:center;
+  }
+  .proto-vazio b{display:block;font-size:16px;margin-bottom:6px}
+  .proto-vazio p{font-size:14px;color:var(--ink-soft)}
+  .proto-vazio .jump-mapa{
+    margin-top:14px;background:var(--ink);color:#fff;border:0;border-radius:var(--r-sm);
+    font-size:14px;font-weight:600;padding:11px 20px;min-height:44px;cursor:pointer;
   }
   .proto-head{display:flex;align-items:center;gap:12px;padding:16px 18px 12px}
   .proto-num{
@@ -477,9 +490,14 @@
     <div class="section-head">
       <p class="sec-tag">// <b>02</b> · Protocolos de emergência</p>
       <h2 id="h-proto">O que fazer em cada trava</h2>
-      <p class="section-sub">Nove padrões, nove protocolos. Cada um tem o gatilho, o que acontece na sua cabeça e o movimento de 60 segundos pra sair da crise.</p>
+      <p class="section-sub">Aqui aparece só o que pega você. Marque seus padrões no mapa acima e os protocolos certos abrem aqui embaixo — com o gatilho, o que acontece na sua cabeça e o movimento de 60 segundos pra sair da crise.</p>
     </div>
     <div id="protoList"></div>
+    <div class="proto-vazio" id="protoVazio">
+      <b>Nenhum padrão marcado ainda</b>
+      <p>Volte ao Mapa de Autossabotagem e marque o que te pega. Só os protocolos que são a sua cara vão aparecer aqui.</p>
+      <button type="button" class="jump-mapa" id="btnVoltarMapa">↑ Ir para o mapa</button>
+    </div>
   </section>
 
   <!-- ============ PROMPTS ============ -->
@@ -756,6 +774,21 @@
     $('sosOpts').innerHTML = sosHtml;
   })();
 
+  /* ---------- só aparece o protocolo que pega ele ---------- */
+  function refreshVazio(){
+    var v = $('protoVazio');
+    if(!v){ return; }
+    var n = all('.proto.pega, .proto.revelado').length;
+    v.style.display = n === 0 ? 'block' : 'none';
+  }
+  /* abre um protocolo mesmo sem estar marcado no mapa (usado pelo SOS) */
+  function revelarProto(key){
+    var p = $('proto-'+key);
+    if(p && p.className.indexOf('revelado')===-1){ p.className += ' revelado'; }
+    refreshVazio();
+    return p;
+  }
+
   /* ---------- mapa: interação ---------- */
   (function initMapa(){
     var items = all('.mapa-item'), i;
@@ -763,8 +796,9 @@
       var n = all('.mapa-item.on').length;
       var r = $('mapaResumo');
       if(n===0){ r.textContent = 'Nenhum padrão marcado ainda.'; }
-      else if(n===1){ r.textContent = '1 padrão te pega. Veja o protocolo marcado abaixo.'; }
-      else { r.textContent = n + ' padrões te pegam. Todos estão marcados nos protocolos abaixo.'; }
+      else if(n===1){ r.textContent = '1 padrão te pega. Seu protocolo abriu logo abaixo.'; }
+      else { r.textContent = n + ' padrões te pegam. Só esses protocolos abriram logo abaixo.'; }
+      refreshVazio();
     }
     function setItem(item, on, persist){
       var key = item.getAttribute('data-key');
@@ -796,6 +830,7 @@
     void el.offsetWidth;
     el.className += ' flash';
   }
+  on($('btnVoltarMapa'),'click',function(){ jumpTo('mapaBox'); });
   (function initJumps(){
     var i, btns = all('[data-jump]');
     for(i=0;i<btns.length;i++){
@@ -896,6 +931,8 @@
       (function(b){
         on(b,'click',function(){
           closeSheet();
+          /* em crise ele pode pedir um padrão que não marcou: abre mesmo assim */
+          revelarProto(b.getAttribute('data-sos'));
           jumpTo('proto-'+b.getAttribute('data-sos'));
         });
       })(opts[i]);
