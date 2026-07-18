@@ -221,6 +221,37 @@
   .footer .end-line{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px}
   .footer .mono{font-size:12px;color:var(--ink-soft);letter-spacing:.1em;text-transform:uppercase;margin-top:10px;display:block}
 
+  /* ---------- chamada de emergência (topo, em evidência) ---------- */
+  .sos-hero{
+    display:flex;align-items:center;gap:14px;width:100%;text-align:left;
+    background:var(--red);color:#fff;border:0;border-radius:var(--r);
+    padding:20px 22px;margin-top:26px;cursor:pointer;
+    box-shadow:0 10px 28px rgba(192,57,43,.28);
+    transition:transform .15s ease,box-shadow .15s ease;
+  }
+  .sos-hero:hover{transform:translateY(-2px);box-shadow:0 14px 34px rgba(192,57,43,.42)}
+  .sos-hero .sh-dot{
+    width:12px;height:12px;border-radius:50%;background:#fff;flex:none;
+    animation:pulseDot 1.8s ease-in-out infinite;
+  }
+  .sos-hero .sh-txt{flex:1}
+  .sos-hero .sh-txt b{
+    display:block;font-family:'Space Grotesk',sans-serif;font-weight:700;
+    font-size:19px;letter-spacing:.01em;
+  }
+  .sos-hero .sh-txt span{display:block;font-size:14px;opacity:.92;margin-top:3px}
+  .sos-hero .sh-arrow{font-size:22px;flex:none;opacity:.9}
+  @keyframes pulseDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+  @media (max-width:520px){
+    .sos-hero{padding:17px 18px;gap:12px}
+    .sos-hero .sh-txt b{font-size:17px}
+    .sos-hero .sh-txt span{font-size:13px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .sos-hero{transition:none}
+    .sos-hero .sh-dot{animation:none}
+  }
+
   /* ---------- botão flutuante de emergência ---------- */
   .sos-btn{
     position:fixed;right:16px;bottom:16px;z-index:80;
@@ -450,22 +481,33 @@
 
 <div class="wrap">
 
+  <!-- ============ CHAMADA DE EMERGÊNCIA ============ -->
+  <button type="button" class="sos-hero" id="sosHero">
+    <span class="sh-dot" aria-hidden="true"></span>
+    <span class="sh-txt">
+      <b>Tô travando agora</b>
+      <span>Toque aqui, diga o que está sentindo e vá direto ao movimento de 60 segundos.</span>
+    </span>
+    <span class="sh-arrow" aria-hidden="true">→</span>
+  </button>
+
   <!-- ============ COMO USAR ============ -->
   <section aria-labelledby="h-como">
     <div class="section-head">
       <p class="sec-tag">// <b>00</b> · Como usar</p>
       <h2 id="h-como">Três formas de usar isto</h2>
+      <p class="section-sub">Isto não é uma aula pra assistir do começo ao fim — é uma <strong>ferramenta de consulta rápida</strong>, tipo um extintor: fica na parede e você só abre quando pega fogo. Vale gastar 5 minutos agora marcando seus padrões, pra que na hora do aperto você chegue no protocolo certo em segundos, sem ter que procurar.</p>
     </div>
     <div class="howto-grid">
       <div class="howto-card">
         <span class="howto-num">01</span>
         <h3>Descubra seus padrões</h3>
-        <p>No Mapa de Autossabotagem, marque o que te pega. Os protocolos certos acendem com a etiqueta "TE PEGA".</p>
+        <p>No Mapa de Autossabotagem, marque o que te pega. Só os protocolos dos seus padrões aparecem — o resto sai do caminho. Faça isso hoje, com a cabeça calma.</p>
       </div>
       <div class="howto-card">
         <span class="howto-num">02</span>
         <h3>"Tô travando agora"</h3>
-        <p>Travou de verdade? Toque no botão vermelho fixo na tela, escolha o sentimento e vá direto ao protocolo.</p>
+        <p>Travou de verdade? Toque no botão vermelho — o do topo ou o que fica fixo na tela — diga o que está sentindo e caia direto no protocolo.</p>
       </div>
       <div class="howto-card">
         <span class="howto-num">03</span>
@@ -505,7 +547,7 @@
     <div class="section-head">
       <p class="sec-tag">// <b>03</b> · Reforço</p>
       <h2 id="h-prompts">Prompts de emergência</h2>
-      <p class="section-sub">Quando o movimento de 60 segundos não bastar, copie o prompt e cole na sua Inteligência Artificial (ChatGPT, Claude, Gemini…). Troque o trecho destacado pela sua tarefa.</p>
+      <p class="section-sub">Quando o movimento de 60 segundos não bastar, copie o prompt e cole no <strong>GAIA ONE</strong> — lá dentro você escolhe qual inteligência quer usar (Claude, GPT, Gemini…) sem precisar de várias contas. Troque o trecho destacado pela sua tarefa.</p>
     </div>
     <div id="promptList"></div>
   </section>
@@ -924,6 +966,7 @@
     function openSheet(){ sheet.className = 'sos-sheet on'; }
     function closeSheet(){ sheet.className = 'sos-sheet'; }
     on($('sosBtn'),'click',openSheet);
+    on($('sosHero'),'click',openSheet);
     on($('sosClose'),'click',closeSheet);
     on(sheet,'click',function(ev){ if(ev.target===sheet){ closeSheet(); } });
     var opts = all('.sos-opt'), i;
