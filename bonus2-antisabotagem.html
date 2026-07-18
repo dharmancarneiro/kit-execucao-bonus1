@@ -311,6 +311,21 @@
   .gate{position:fixed;inset:0;z-index:100;background:rgba(22,33,46,.58);display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:24px 16px;-webkit-overflow-scrolling:touch}
   .gate[hidden]{display:none}
   .gate-card{background:var(--card);border-radius:16px;max-width:480px;width:100%;padding:26px 22px 28px;margin:auto 0;box-shadow:0 24px 60px rgba(22,33,46,.4);border-top:4px solid var(--red)}
+  /* capa (passo 0) */
+  .gate-cover{
+    background:#0A1420;border-radius:16px;max-width:430px;width:100%;
+    margin:auto 0;overflow:hidden;box-shadow:0 24px 60px rgba(10,20,32,.5);
+  }
+  .gate-cover[hidden]{display:none}
+  .cover-img{display:block;width:100%;height:auto}
+  .cover-panel{padding:20px 22px 24px;background:#0A1420}
+  .cover-lede{color:#C9D4E0;font-size:15px;line-height:1.55;margin-bottom:16px;text-align:center}
+  .cover-lede strong{color:#fff}
+  .cover-panel .btn-primary{margin-top:0}
+  .gate-back{
+    display:block;width:100%;margin-top:12px;background:none;border:0;
+    color:var(--ink-soft);font-size:13px;text-decoration:underline;padding:6px;
+  }
   .gate-card h2{font-size:23px;margin-top:8px}
   .gate-frame{font-size:14px;color:var(--ink-soft);margin-top:10px}
   .req{color:var(--red-deep)}
@@ -333,23 +348,43 @@
 
 <!-- ============ GATE — 2 passos: identificação → pesquisa ============ -->
 <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateTitle">
-  <div class="gate-card">
 
-    <!-- PASSO 1: identificação -->
-    <div id="gateId">
+  <!-- PASSO 0: CAPA -->
+  <div class="gate-cover" id="gateCover">
+    <img src="capa-bonus2.jpg" alt="Protocolo Anti-Autossabotagem — Bônus 2 do Execução 5.0, com Christian Barbosa" class="cover-img">
+    <div class="cover-panel">
+      <p class="cover-lede">Seu <strong>Protocolo Anti-Autossabotagem</strong> está a um passo. Ele abre direto no que trava você.</p>
+      <button type="button" class="btn-primary" id="btnCoverStart">Iniciar protocolo →</button>
+    </div>
+  </div>
+
+  <div class="gate-card" id="gateCard" hidden>
+
+    <!-- PASSO 1: e-mail -->
+    <div id="gateEmail">
+      <span class="eyebrow">Bônus 2 · Execução 5.0</span>
+      <h2 id="gateTitle">Qual é o seu e-mail?</h2>
+      <p class="gate-frame">Se você já respondeu a pesquisa deste bônus, entra direto no protocolo. Se ainda não, são 2 minutos.</p>
+
+      <div class="field" id="fEmail">
+        <label for="inEmail">E-mail <span class="req">*</span></label>
+        <input type="text" id="inEmail" autocomplete="email" inputmode="email" placeholder="voce@email.com">
+        <span class="field-err">Digite um e-mail válido.</span>
+      </div>
+
+      <button type="button" class="btn-primary" id="btnEmail">Continuar →</button>
+    </div>
+
+    <!-- PASSO 2: identificação -->
+    <div id="gateId" hidden>
       <span class="eyebrow">Bônus 2 · Execução 5.0 · Passo 1 de 2</span>
-      <h2 id="gateTitle">Antes de abrir seu protocolo</h2>
+      <h2>Antes de abrir seu protocolo</h2>
       <p class="gate-frame">Isto aqui é a sua ferramenta de emergência pra quando a cabeça travar. Deixa a gente saber que é você — pra acompanhar seu progresso no Execução 5.0.</p>
 
       <div class="field" id="fNome">
         <label for="inNome">Nome <span class="req">*</span></label>
         <input type="text" id="inNome" autocomplete="name" placeholder="Seu nome">
         <span class="field-err">Digite seu nome.</span>
-      </div>
-      <div class="field" id="fEmail">
-        <label for="inEmail">E-mail <span class="req">*</span></label>
-        <input type="text" id="inEmail" autocomplete="email" inputmode="email" placeholder="voce@email.com">
-        <span class="field-err">Digite um e-mail válido.</span>
       </div>
       <div class="field" id="fTel">
         <label for="inTel">Telefone / WhatsApp (com DDD) <span class="req">*</span></label>
@@ -783,6 +818,28 @@
     }catch(e){ if(cb){cb();} }
   }
 
+  // cb(feita) — true se este e-mail já respondeu a pesquisa do Bônus 2.
+  // Em qualquer falha (função ainda não criada, rede fora), devolve false:
+  // é melhor pedir a pesquisa de novo do que barrar quem chega agora.
+  function sbPesquisaFeita(email, cb){
+    if(!supabaseAtivo){ cb(false); return; }
+    try{
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', SUPABASE_URL + '/rest/v1/rpc/bonus2_pesquisa_feita', true);
+      xhr.setRequestHeader('apikey', SUPABASE_ANON);
+      xhr.setRequestHeader('Authorization', 'Bearer ' + SUPABASE_ANON);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.onreadystatechange = function(){
+        if(xhr.readyState === 4){
+          if(xhr.status >= 200 && xhr.status < 300){
+            cb(String(xhr.responseText).replace(/\s/g,'') === 'true');
+          } else { cb(false); }
+        }
+      };
+      xhr.send(JSON.stringify({ p_email: email }));
+    }catch(e){ cb(false); }
+  }
+
   /* ---------- render: mapa ---------- */
   (function renderMapa(){
     var box = $('mapaBox'), html = '', i;
@@ -1029,17 +1086,62 @@
 
     var dados = {};
 
-    // ---- PASSO 1: identificação ----
+    function entrarNoProtocolo(){
+      storeSet(K('gate_done'), '1');
+      gate.hidden = true;
+      document.body.style.overflow = '';
+      liberar();
+    }
+
+    // ---- PASSO 0: capa ----
+    on($('btnCoverStart'),'click',function(){
+      $('gateCover').hidden = true;
+      $('gateCard').hidden = false;
+      gate.scrollTop = 0;
+      $('inEmail').focus();
+    });
+
+    // ---- PASSO 1: e-mail → já respondeu a pesquisa? ----
+    function submeterEmail(){
+      var email = $('inEmail').value.replace(/^\s+|\s+$/g,'');
+      var valido = validaEmail(email);
+      markInvalid('fEmail', !valido);
+      if(!valido){ $('inEmail').focus(); return; }
+
+      var btn = $('btnEmail');
+      btn.disabled = true;
+      btn.textContent = 'Verificando…';
+
+      sbPesquisaFeita(email, function(feita){
+        btn.disabled = false;
+        btn.textContent = 'Continuar →';
+        storeSet(K('email'), email);
+        dados.email = email;
+        if(feita){
+          // já respondeu antes → vai direto pro protocolo
+          entrarNoProtocolo();
+        } else {
+          $('gateEmail').hidden = true;
+          $('gateId').hidden = false;
+          gate.scrollTop = 0;
+          $('inNome').focus();
+        }
+      });
+    }
+    on($('btnEmail'),'click',submeterEmail);
+    on($('inEmail'),'keydown',function(ev){
+      if(ev.key==='Enter'||ev.keyCode===13){ ev.preventDefault(); submeterEmail(); }
+    });
+
+    // ---- PASSO 2: identificação ----
     on($('btnStep1'),'click',function(){
       var nome=$('inNome').value.replace(/^\s+|\s+$/g,'');
-      var email=$('inEmail').value.replace(/^\s+|\s+$/g,'');
       var tel=$('inTel').value.replace(/^\s+|\s+$/g,'');
       var ok=true;
       markInvalid('fNome', nome.length<2); if(nome.length<2){ ok=false; }
-      markInvalid('fEmail', !validaEmail(email)); if(!validaEmail(email)){ ok=false; }
       markInvalid('fTel', !validaTel(tel)); if(!validaTel(tel)){ ok=false; }
       if(!ok){ var fi=document.querySelector('.gate .field.invalid input'); if(fi){ fi.focus(); } return; }
-      dados.nome=nome; dados.email=email; dados.telefone=tel;
+      dados.nome=nome; dados.telefone=tel;
       $('gateId').hidden = true;
       $('gateSurvey').hidden = false;
       gate.scrollTop = 0;
@@ -1071,12 +1173,7 @@
         maior_duvida:duvida, medo_futuro:medo, prioridade:prior,
         tarefa_adiada:tarefa, custo_doloroso:custo, dia_livre:dia,
         consentimento:true
-      }, function(){
-        storeSet(K('gate_done'),'1');
-        gate.hidden = true;
-        document.body.style.overflow = '';
-        liberar();
-      });
+      }, entrarNoProtocolo);
     });
   })();
 

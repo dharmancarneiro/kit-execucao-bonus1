@@ -123,3 +123,23 @@ create index if not exists idx_b2_email      on public.bonus2_antisabotagem (low
 -- select maior_duvida,  count(*) from public.bonus2_antisabotagem group by 1 order by 2 desc;
 -- select medo_futuro,   count(*) from public.bonus2_antisabotagem group by 1 order by 2 desc;
 -- select prioridade,    count(*) from public.bonus2_antisabotagem group by 1 order by 2 desc;
+
+-- ============================================================
+-- Checagem de e-mail já respondido (para o gate do Bônus 2)
+-- ------------------------------------------------------------
+-- A tabela NÃO tem política de SELECT (privacidade). Esta função
+-- roda como security definer só pra devolver um true/false — ela
+-- nunca expõe dado nenhum, só responde "esse e-mail já respondeu?".
+-- Sem ela, o gate simplesmente manda todo mundo pra pesquisa.
+-- ============================================================
+create or replace function public.bonus2_pesquisa_feita(p_email text)
+returns boolean
+language sql stable security definer set search_path = public
+as $$
+  select exists(
+    select 1 from public.bonus2_antisabotagem
+    where lower(email) = lower(trim(p_email))
+  )
+$$;
+revoke all on function public.bonus2_pesquisa_feita(text) from public;
+grant execute on function public.bonus2_pesquisa_feita(text) to anon;
