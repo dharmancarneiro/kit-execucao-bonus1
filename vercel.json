@@ -1,0 +1,14 @@
+{
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "protocolo-antisabotagem.vercel.app" }],
+      "destination": "/bonus2-antisabotagem.html"
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "protocolo-execucao5.vercel.app" }],
+      "destination": "/bonus2-antisabotagem.html"
+    }
+  ]
+}
