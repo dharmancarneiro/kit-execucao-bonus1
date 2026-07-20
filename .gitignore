@@ -1,0 +1,22 @@
+# ============================================================
+# TUDO NESTE REPO VAI PRO AR (Vercel). Nada de segredo aqui.
+# ============================================================
+
+# Painéis internos: usam chave de administrador (lê tudo do banco).
+# Se forem publicados, qualquer um baixa a base de clientes.
+admin-dhm.html
+painel-gestao.html
+painel-*.html
+admin-*.html
+
+# Chaves e segredos
+.env
+.env.*
+*.key
+*.pem
+service_role*
+*secret*
+
+# Sistema
+.DS_Store
+node_modules/

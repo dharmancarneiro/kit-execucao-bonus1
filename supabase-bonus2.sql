@@ -143,3 +143,53 @@ as $$
 $$;
 revoke all on function public.bonus2_pesquisa_feita(text) from public;
 grant execute on function public.bonus2_pesquisa_feita(text) to anon;
+
+-- ============================================================
+-- CAMADAS DE SEGURANÇA (auditado e aplicado em 20/07/2026)
+-- ------------------------------------------------------------
+-- Verificado com a chave PÚBLICA contra a API real:
+--   SELECT  -> devolve [] (RLS bloqueia leitura)
+--   PATCH   -> não altera nada
+--   DELETE  -> não apaga nada
+-- Ou seja: a base de clientes NÃO é legível por quem tem a chave
+-- do site. Só a service_role (painel local) enxerga os dados.
+--
+-- Abaixo, as travas contra ABUSO de escrita (a única coisa que a
+-- chave pública pode fazer: inserir).
+-- ============================================================
+
+-- Limite de tamanho: sem isso, qualquer um despeja megabytes na tabela
+alter table public.bonus2_antisabotagem drop constraint if exists b2_limites;
+alter table public.bonus2_antisabotagem add constraint b2_limites check (
+  length(nome) between 1 and 120
+  and length(email) between 5 and 200
+  and length(coalesce(telefone,'')) <= 30
+  and length(coalesce(tarefa_adiada,'')) <= 2000
+  and length(coalesce(custo_doloroso,'')) <= 2000
+  and length(coalesce(dia_livre,'')) <= 2000
+  and length(coalesce(voz_interna,'')) <= 200
+  and length(coalesce(momento_ataque,'')) <= 200
+  and length(coalesce(sentimento,'')) <= 200
+  and length(coalesce(frequencia,'')) <= 200
+  and length(coalesce(maior_duvida,'')) <= 200
+  and length(coalesce(medo_futuro,'')) <= 200
+  and length(coalesce(prioridade,'')) <= 200
+) not valid;
+
+-- E-mail precisa ter cara de e-mail
+alter table public.bonus2_antisabotagem drop constraint if exists b2_email_formato;
+alter table public.bonus2_antisabotagem add constraint b2_email_formato
+  check (email ~ '^[^@[:space:]]+@[^@[:space:]]+[.][^@[:space:]]+$') not valid;
+
+-- Mesmas travas no Bônus 1
+alter table public.alunos_execucao5 drop constraint if exists b1_limites;
+alter table public.alunos_execucao5 add constraint b1_limites check (
+  length(nome) between 1 and 120 and length(email) between 5 and 200
+) not valid;
+alter table public.alunos_execucao5 drop constraint if exists b1_email_formato;
+alter table public.alunos_execucao5 add constraint b1_email_formato
+  check (email ~ '^[^@[:space:]]+@[^@[:space:]]+[.][^@[:space:]]+$') not valid;
+
+-- RISCO CONHECIDO E ACEITO: bonus2_pesquisa_feita permite descobrir
+-- se um e-mail específico está na base (enumeração). É o preço do
+-- "já respondeu, entra direto". Só revela sim/não, nunca dados.
